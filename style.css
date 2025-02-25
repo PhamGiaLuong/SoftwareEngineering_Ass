@@ -1,0 +1,56 @@
+body {
+    font-family: 'Asap', sans-serif;
+    padding-top: 70px;
+    font-size: 16px;
+}
+
+h1, h2 {
+    font-family: 'Signika Negative', sans-serif;
+    color: #030391;
+}
+
+/* -----------------------------------------------TRANG CHỦ----------------------------------------------- */
+/* Come-in annimation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navigation bar */
+.nbar {
+    background-color: #0388b4 !important;
+    color: white !important;
+}
+
+.nlink {
+    color: white;
+}
+
+.nlink.active {
+    color: white !important;
+    font-weight: bolder;
+    /* background-color: #576574; */
+    /* border-radius: 20px !important; */
+}
+
+.offcanvas {
+    background-color: #222f3e;
+}
+
+.offcanvas-header h5 {
+    color: white;
+}
+
+.offcanvas-body .nav-link {
+    color: white !important;
+}
+
+.offcanvas-body .nav-link:hover {
+    font-weight: bold;
+}
