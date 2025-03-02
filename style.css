@@ -1,12 +1,86 @@
 body {
     font-family: 'Asap', sans-serif;
     padding-top: 70px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 h1, h2 {
     font-family: 'Signika Negative', sans-serif;
     color: #030391;
+}
+
+a {
+    text-decoration: none;
+    color: #030391;
+}
+
+/* -----------------------------------------------Width----------------------------------------------- */
+.w-xs-50 { width: 50% !important; }
+.w-sm-30 { width: 30% !important; }
+.w-md-30 { width: 30% !important; }
+
+@media (max-width: 576px) { .w-xs-50 { width: 100% !important; } }
+@media (min-width: 768px) { .w-sm-30 { width: 30% !important; } }
+@media (min-width: 992px) { .w-md-30 { width: 30% !important; } }
+
+/* -----------------------------------------------TAB ĐĂNG NHẬP----------------------------------------------- */
+.signInTab {
+    background-image: url("/Assignment/1.png");
+    background-repeat: no-repeat;
+    height: 650px;
+    /* background-color: #010f11; */
+    background-size: contain;
+    background-position: center;
+}
+
+.signUpTab {
+    background-image: url("/Assignment/2.png");
+    background-repeat: no-repeat;
+    height: 650px;
+    /* background-color: #010f11; */
+    background-size: contain;
+    background-position: center;
+}
+
+.sign-box {
+    /* transform: translate(-50%, -50%); */
+    box-shadow: 0 15px 25px #222f3e;
+}
+
+.user-box {
+    position: relative;
+    font-family: 'Asap', sans-serif;
+}
+
+.user-box input {
+    width: 100%;
+    padding: 5px 0;
+    font-size: 16px;
+    color: #222f3e;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #222f3e;
+    outline: none;
+    background: transparent;
+}
+
+.user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px 0;
+    font-size: 16px;
+    color: #222f3e;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.user-box input:focus~label,
+.user-box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #222f3e;
+    font-size: 12px;
 }
 
 /* -----------------------------------------------TRANG CHỦ----------------------------------------------- */
@@ -26,16 +100,20 @@ h1, h2 {
 .nbar {
     background-color: #0388b4 !important;
     color: white !important;
+    padding: 0;
 }
 
 .nlink {
     color: white;
+    opacity: 80%;
 }
 
 .nlink.active {
     color: white !important;
-    font-weight: bolder;
-    /* background-color: #576574; */
+    font-weight: bold;
+    font-size: 17px;
+    opacity: 100%;
+    /* background-color: #030391; */
     /* border-radius: 20px !important; */
 }
 

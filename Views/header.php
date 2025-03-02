@@ -1,3 +1,8 @@
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} 
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,8 +27,8 @@
         <!-- Navigation bar -->
         <div class="navbar nbar navbar-light fixed-top navbar-expand-lg" style="font-family: 'Signika Negative';">
             <div class="container-fluid">
-                <div class="col-3">
-                    <a class="col-12 d-flex navbar-brand" href="/SE_Ass_Code/index.php">
+                <div class="col-3 py-2">
+                    <a class="col-12 d-flex navbar-brand" href="/SE_Ass_Code/index.php?url=home">
                         <div> 
                             <img src="/se_ass_code/Images/logoVienTrang.png" alt="Logo" width="50px">
                         </div>
@@ -34,7 +39,7 @@
                     </a>
                 </div>
                 
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                <div class="offcanvas offcanvas-end text-bg-dark w-xs-50 w-sm-30" tabindex="-1" id="offcanvasDarkNavbar"
                     aria-labelledby="offcanvasDarkNavbarLabel" >
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">BK STUDY SPACE</h5>
@@ -42,41 +47,63 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link nlink active px-2" aria-current="page" href="" data-tab="home">TRANG CHỦ</a>
+                        <ul class="navbar-nav justify-content-end align-items-center flex-grow-1 pe-3">
+                            <li class="nav-item px-2">
+                                <a class="nav-link nlink <?php echo (TAB == "home") ? "active" : ""; ?>" 
+                                aria-current="page" href="/SE_Ass_Code/index.php?url=home" data-tab="home">
+                                    TRANG CHỦ
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink px-2" href="" data-tab="statistic">THỐNG KÊ</a>
+                            <?php if (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin")): ?>
+                            <li class="nav-item px-2">
+                                <a class="nav-link nlink <?php echo (TAB == "statistic") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=statistic" data-tab="statistic">
+                                    THỐNG KÊ
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink px-2" href="" data-tab="booking">ĐẶT PHÒNG</a>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION["Role"])): ?>
+                            <li class="nav-item px-2">
+                                <a class="nav-link nlink <?php echo (TAB == "booking") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=booking" data-tab="booking">
+                                    ĐẶT PHÒNG
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink px-2" href="" data-tab="chat">
+                            <li class="nav-item px-2">
+                                <a class="nav-link nlink <?php echo (TAB == "chat") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=chat" data-tab="chat">
                                     <span class="material-icons-round">forum</span>
                                 </a>
                             </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="material-icons-round">account_circle</span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
+                                    <?php if (isset($_SESSION["Role"])): ?>
                                         <li>
-                                            <a class="dropdown-item" href="" data-tab="account">
+                                            <a class="dropdown-item" href="/SE_Ass_Code/index.php?url=account" data-tab="account">
                                                 Tài khoản
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="" data-tab="account">
+                                            <a class="dropdown-item" href="/SE_Ass_Code/index.php?url=history" data-tab="account">
                                                 Lịch sử đặt phòng
                                             </a>
                                         </li>
+                                    <?php endif; ?>    
                                         <li>
-                                            <a class="dropdown-item" href="" data-tab="account">
-                                                Đăng nhập
-                                            </a>
+                                            <?php if (isset($_SESSION["userID"])): ?>
+                                                <a class="dropdown-item" href="/SE_Ass_Code/index.php?url=logout" data-tab="account">
+                                                    Đăng xuất (<?php echo $_SESSION["userID"]; ?>)
+                                                </a>
+                                            <?php else: ?>
+                                                <a class="dropdown-item" href="/SE_Ass_Code/index.php?url=loginOption" data-tab="account">
+                                                    Đăng nhập
+                                                </a>
+                                            <?php endif; ?>
                                         </li>
                                     </ul>
                                 </div>
