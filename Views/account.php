@@ -4,10 +4,6 @@
         <h2>THÔNG TIN TÀI KHOẢN</h2>
     </div>
     <div class="d-flex flex-wrap align-items-center justify-content-center col-md-8 col-lg-6 col-12 border rounded-5 mb-2">
-        <!-- <div class="col-md-2 col-5 rounded-circle h-25"
-            style="background: url('<?php echo $user["image"]; ?>'); background-repeat: no-repeat; background-size: cover;">
-            
-        </div> -->
         <div class="col-12 m-2 d-flex flex-wrap justify-content-center align-items-center">
             <div class="col-md-3 col-12 rounded-circle overflow-hidden border"
                 style="width: 100px; height: 100px; background: url('<?php echo $user["image"]; ?>') center/cover no-repeat;">
@@ -62,7 +58,11 @@
             </div>
         </div>
     </div>
-    
+    <div class="d-flex flex-wrap align-items-center justify-content-center col-12">
+        <div class="col-md-3 col-6 d-flex flex-wrap align-items-center justify-content-center">
+            <a class="btn btn-secondary" href="/SE_Ass_Code/index.php?url=history" role="button">Lịch sử đặt phòng</a>
+        </div>
+    </div>
 </div>
 
 <?php include('footer.php'); ?>

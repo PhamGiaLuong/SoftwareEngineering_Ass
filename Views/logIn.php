@@ -56,7 +56,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             ?>
                         </h2>
                     </div>
-                    <div class="col-md-6 col-12 rounded-5">
+                    <div class="col-md-6 col-12 rounded-5 pt-md-4">
                     <?php if (isset($_SESSION["error"])): ?>
                         <div class="alert alert-danger text-center m-3" role="alert">
                             <p><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
@@ -75,12 +75,12 @@ if (session_status() === PHP_SESSION_NONE) {
                                         ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? "ID" : "");
                                 ?></label>
                             </div>
-                            <div class="user-box">
+                            <div class="user-box mb-md-5">
                                 <input type="password" id="password" name="password" required>
                                 <label for="password">Mật Khẩu</label>
                             </div>
                             <?php if(isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff"): ?>
-                            <div class="text-end mb-2">
+                            <div class="text-end mb-2 mt-md-5">
                                 <a href="/SE_Ass_Code/index.php?url=logIn/forgotPassword">Quên mật khẩu?</a>
                             </div>
                             <?php endif ?>

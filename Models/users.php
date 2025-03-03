@@ -2,12 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-class User {
+class Users {
     private $Staffs = [
         ["id" => "250001", "password" => "admin1", "role" => "admin", "image" => "/SE_Ass_Code/Images/a1.png",
             "name" => "Thế Hưng A", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
         ["id" => "250002", "password" => "admin2", "role" => "admin", "image" => "/SE_Ass_Code/Images/a6.png", 
-            "name" => "Hải Dương A", "email" => "duonga2k44nknd@gmail.com", "faculty" => "Phòng Quản trị thiết bị"],
+            "name" => "Hải Dương A", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "250003", "password" => "admin3", "role" => "admin", "image" => "/SE_Ass_Code/Images/a5.png",
             "name" => "Tuấn Lâm A", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
         ["id" => "250004", "password" => "admin4", "role" => "admin", "image" => "/SE_Ass_Code/Images/a3.png",
@@ -15,7 +15,7 @@ class User {
         ["id" => "251101", "password" => "staff1", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png",
             "name" => "Thế Hưng B", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "251102", "password" => "staff2", "role" => "staff", "image" => "/SE_Ass_Code/Images/a1.png",
-            "name" => "Hải Dương B", "email" => "duonga2k44nknd@gmail.com", "faculty" => "Phòng Quản trị thiết bị"],
+            "name" => "Hải Dương B", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "251103", "password" => "staff3", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png",
             "name" => "Tuấn Lâm B", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "251104", "password" => "staff4", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png",
@@ -24,7 +24,7 @@ class User {
 
     private $HCMUTs = [
         ["BKNetID" => "2210615", "password" => "Duong", "role" => "student", "image" => "/SE_Ass_Code/Images/a4.png",
-            "name" => "Nguyễn Hữu Hải Dương", "email" => "duonga2k44nknd@gmail.com", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
+            "name" => "Nguyễn Hữu Hải Dương", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2211816", "password" => "Lam", "role" => "student", "image" => "/SE_Ass_Code/Images/a6.png",
             "name" => "Nguyễn Quốc Tuấn Lâm", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2211960", "password" => "Luong", "role" => "teacher", "image" => "/SE_Ass_Code/Images/a1.png",

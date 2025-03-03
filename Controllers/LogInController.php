@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once "./Models/user.php";
+require_once "./Models/users.php";
 require_once "./Models/mail.php";
 
 class LogInController {
@@ -28,9 +28,9 @@ class LogInController {
             $id = $_POST["id"] ?? "";
             $password = $_POST["password"] ?? "";
 
-            $userModel = new User();
+            $userModel = new Users();
             $user = $userModel->authenticate($id, $password);
-
+            $_SESSION["avatar"] = $user["image"];
             if ($user) {
                 $_SESSION["userID"] = (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? $user["BKNetID"]: 
                                     ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? $user["id"] : "");
@@ -52,7 +52,7 @@ class LogInController {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id = $_POST["id"];
             
-            $userModel = new User();
+            $userModel = new Users();
             $user = $userModel->getUserByID($id);
             if (!$user) {
                 $_SESSION["error"] = "Không tìm thấy ID!";
@@ -99,7 +99,7 @@ class LogInController {
             $token = $_POST["token"];
             $newPassword = $_POST["password"];//password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-            $userModel = new User();
+            $userModel = new Users();
             if ($userModel->updatePasswordWithToken($token, $newPassword)) {
                 $_SESSION["success"] = "Mật khẩu đã được đặt lại thành công. Vui lòng đăng nhập.";
                 header("Location: /SE_Ass_Code/index.php?url=logIn");

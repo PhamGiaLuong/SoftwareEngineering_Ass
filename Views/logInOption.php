@@ -38,7 +38,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             xin chào
                         </h1>
                     </div>
-                    <div class="m-2">
+                    <div class="m-2 mb-5">
                         <h5>
                         Xác thực với:
                         </h5>

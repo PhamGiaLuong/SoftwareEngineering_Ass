@@ -2,10 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once "./Models/user.php";
+require_once "./Models/users.php";
 class AccountController {
     public function index(){
-        $userModel = new User();
+        $userModel = new Users();
         if($_SESSION["DB"] == "Staff"){
             $user = $userModel->getUserByID($_SESSION["userID"]);
         }else{

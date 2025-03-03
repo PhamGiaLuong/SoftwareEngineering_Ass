@@ -22,6 +22,27 @@ if (session_status() === PHP_SESSION_NONE) {
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"> <!-- font Dancing Script -->
         <link href="/se_ass_code/style.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery framework -->
+        <script src="https://cdn.tiny.cloud/1/pg0fxvvaw4rw62a8nmiwf73uq94pa6rcrq7yeba6yhry7yca/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#form_content',
+                plugins: [
+                // Core editing features
+                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                // Your account includes a free trial of TinyMCE premium features
+                // Try the most popular premium features until Mar 17, 2025:
+                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+                ],
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                tinycomments_mode: 'embedded',
+                tinycomments_author: 'Author name',
+                mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+                ],
+                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+            });
+        </script>
     </head>
     <body>
         <!-- Navigation bar -->
@@ -56,9 +77,17 @@ if (session_status() === PHP_SESSION_NONE) {
                             </li>
                             <?php if (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin")): ?>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo (TAB == "statistic") ? "active" : ""; ?>" 
-                                href="/SE_Ass_Code/index.php?url=statistic" data-tab="statistic">
-                                    THỐNG KÊ
+                                <a class="nav-link nlink <?php echo (TAB == "manage") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=manage" data-tab="manage">
+                                    QUẢN LÝ
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "admin")): ?>
+                            <li class="nav-item px-2">
+                                <a class="nav-link nlink <?php echo (TAB == "admin") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=admin" data-tab="admin">
+                                    QUẢN TRỊ
                                 </a>
                             </li>
                             <?php endif; ?>
@@ -70,18 +99,24 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </li>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo (TAB == "chat") ? "active" : ""; ?>" 
-                                href="/SE_Ass_Code/index.php?url=chat" data-tab="chat">
+                                <a class="nav-link nlink <?php echo (TAB == "forum") ? "active" : ""; ?>" 
+                                href="/SE_Ass_Code/index.php?url=forum" data-tab="forum">
                                     <span class="material-icons-round">forum</span>
                                 </a>
                             </li>
                             <?php endif; ?>
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn dropdown-toggle text-white d-flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <?php if (isset($_SESSION["Role"])): ?>
+                                        <div class="col-12 rounded-circle overflow-hidden border"
+                                            style="width: 30px; height: 30px; background: url('<?php echo $_SESSION["avatar"]; ?>') center/cover no-repeat;">
+                                    </div>
+                                    <?php else: ?>
                                         <span class="material-icons-round">account_circle</span>
+                                    <?php endif; ?>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
+                                    <ul class="dropdown-menu dropdown-menu-end" style="font-family: 'Asap', sans-serif;">
                                     <?php if (isset($_SESSION["Role"])): ?>
                                         <li>
                                             <a class="dropdown-item" href="/SE_Ass_Code/index.php?url=account" data-tab="account">
