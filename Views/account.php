@@ -59,7 +59,12 @@
         </div>
     </div>
     <div class="d-flex flex-wrap align-items-center justify-content-center col-12">
-        <div class="col-md-3 col-6 d-flex flex-wrap align-items-center justify-content-center">
+        <?php if ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin"): ?>
+        <div class="col-md-3 col-5 d-flex flex-wrap align-items-center justify-content-center">
+            <a class="btn btn-secondary" href="/SE_Ass_Code/index.php?url=logIn/forgotPassword" role="button">Đổi mật khẩu</a>
+        </div>
+        <?php endif; ?>
+        <div class="col-md-3 col-5 d-flex flex-wrap align-items-center justify-content-center">
             <a class="btn btn-secondary" href="/SE_Ass_Code/index.php?url=history" role="button">Lịch sử đặt phòng</a>
         </div>
     </div>

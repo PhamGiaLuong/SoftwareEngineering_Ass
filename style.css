@@ -1,10 +1,11 @@
+/* GIA LUONG------------------------------------------------------------------------------- */
 body {
     font-family: 'Asap', sans-serif;
     padding-top: 70px;
     font-size: 18px;
 }
 
-h1, h2 {
+h1, h2, h3 {
     font-family: 'Signika Negative', sans-serif;
     color: #030391;
 }
@@ -14,7 +15,33 @@ a {
     color: #030391;
 }
 
-/* -----------------------------------------------Width----------------------------------------------- */
+/* Nút nhấn */
+.btn-main {
+    background-color: #222f3e;
+    border-color: #222f3e;
+    color: white;
+}
+.btn-main:hover {
+    background-color: #495057;
+    border-color: #495057;
+    color: white;
+}
+
+.btn-outline-main {
+    background-color: transparent;
+    border: 2px solid #222f3e;
+    color: #222f3e;
+}
+.btn-outline-main:hover {
+    background-color: #222f3e;
+    color: white;
+}
+/* Tiêu đề table */
+.custom-thead {
+    background-color: #222f3e !important;
+}
+
+/* -----------------Width-------------------- */
 .w-xs-50 { width: 50% !important; }
 .w-sm-30 { width: 30% !important; }
 .w-md-30 { width: 30% !important; }
@@ -23,7 +50,7 @@ a {
 @media (min-width: 768px) { .w-sm-30 { width: 30% !important; } }
 @media (min-width: 992px) { .w-md-30 { width: 30% !important; } }
 
-/* -----------------------------------------------TAB ĐĂNG NHẬP----------------------------------------------- */
+/* ------------TAB ĐĂNG NH------------------- */
 .signInTab {
     background-image: url("/Assignment/1.png");
     background-repeat: no-repeat;
@@ -69,7 +96,7 @@ a {
     top: 0;
     left: 0;
     padding: 5px 0;
-    font-size: 16px;
+    font-size: 18px;
     color: #222f3e;
     pointer-events: none;
     transition: 0.5s;
@@ -80,10 +107,10 @@ a {
     top: -20px;
     left: 0;
     color: #222f3e;
-    font-size: 12px;
+    font-size: 16px;
 }
 
-/* -----------------------------------------------TRANG CHỦ----------------------------------------------- */
+/* -----------TRANG CHỦ--------------------- */
 /* Come-in annimation */
 .fade-in {
     opacity: 0;
@@ -132,3 +159,58 @@ a {
 .offcanvas-body .nav-link:hover {
     font-weight: bold;
 }
+
+/* Giới hạn văn bản hiển thị */
+/* .truncate-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-height: 50px;
+}
+
+.truncate-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+} */
+.table {
+    table-layout: fixed; 
+    width: 100%; 
+}
+
+.table th, .table td {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+}
+/* Thanh phân trang */
+.pagination .page-link {
+    background-color: none; /* Màu nền */
+    color: #222f3e; /* Màu chữ */
+    border-color: #222f3e; /* Viền */
+}
+
+.pagination .page-link:hover {
+    background-color: #020272; /* Màu nền khi hover */
+    border-color: #020272;
+    color: white;
+}
+
+.pagination .active .page-link {
+    background-color: #222f3e; /* Màu nền trang đang chọn */
+    border-color: #222f3e;
+    color: white;
+}
+
+
+/* HAI DUONG------------------------------------------------------------------------------- */
+
+
+
+
+/* THE HUNG------------------------------------------------------------------------------- */
+
+

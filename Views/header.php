@@ -28,19 +28,24 @@ if (session_status() === PHP_SESSION_NONE) {
                 selector: '#form_content',
                 plugins: [
                 // Core editing features
-                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                'anchor', 'autolink', 'charmap', 'code', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
                 // Your account includes a free trial of TinyMCE premium features
                 // Try the most popular premium features until Mar 17, 2025:
-                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 
+                'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 
+                'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
                 ],
+                extended_valid_elements: 'a[href|target|title],img[src|alt|title|width|height],table[border|cellspacing|cellpadding]', // Cho phép chỉnh sửa
+                forced_root_block: '',
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                 tinycomments_mode: 'embedded',
                 tinycomments_author: 'Author name',
-                mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-                ],
                 ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        tinymce.triggerSave(); // Cập nhật nội dung từ trình soạn thảo vào textarea
+                    });
+                }
             });
         </script>
     </head>
@@ -111,7 +116,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                     <?php if (isset($_SESSION["Role"])): ?>
                                         <div class="col-12 rounded-circle overflow-hidden border"
                                             style="width: 30px; height: 30px; background: url('<?php echo $_SESSION["avatar"]; ?>') center/cover no-repeat;">
-                                    </div>
+                                        </div>
                                     <?php else: ?>
                                         <span class="material-icons-round">account_circle</span>
                                     <?php endif; ?>

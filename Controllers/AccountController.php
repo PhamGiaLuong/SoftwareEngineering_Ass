@@ -5,12 +5,21 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once "./Models/users.php";
 class AccountController {
     public function index(){
+        if (!isset($_SESSION["DB"]) || !isset($_SESSION["userID"])) {
+            header("Location: /SE_Ass_Code/index.php?url=loginOption");
+            exit();
+        }
+
         $userModel = new Users();
-        if($_SESSION["DB"] == "Staff"){
-            $user = $userModel->getUserByID($_SESSION["userID"]);
-        }else{
-            $user = $userModel->getUserByBKNetID($_SESSION["userID"]);
-        }  
+        $user = null;
+
+        $user = $userModel->getUserByID($_SESSION["userID"]);
+        
+        if ($user === null) {
+            header("Location: /SE_Ass_Code/index.php?url=loginOption");
+            exit();
+        }
+
         require_once('./Views/account.php');
     }
 }

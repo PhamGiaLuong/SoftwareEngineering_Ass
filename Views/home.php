@@ -30,6 +30,26 @@
         <div>
             <h2>THÔNG BÁO CHUNG</h2>
         </div>
+        <?php      
+        // Thông tin đặt phòng
+        $userID = 1111;
+        $roomID = 112;
+        $date = "12/3/2025";
+        $time_start = "12:15";
+        $time_end = "14:50";
+
+        // Chuỗi JSON chứa thông tin
+        $data = json_encode([
+            "userID" => $userID,
+            "roomID" => $roomID,
+            "date" => $date,
+            "time_start" => $time_start,
+            "time_end" => $time_end
+        ]);
+        // $text = "xinchaocucdang";
+        echo "<img src='https://quickchart.io/qr?text=" . urlencode($data) . "&size=200' alt='QR Code' />";
+
+        ?>
     </div>
 
 <?php include('footer.php'); ?>

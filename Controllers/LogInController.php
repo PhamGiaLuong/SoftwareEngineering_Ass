@@ -31,6 +31,7 @@ class LogInController {
             $userModel = new Users();
             $user = $userModel->authenticate($id, $password);
             $_SESSION["avatar"] = $user["image"];
+
             if ($user) {
                 $_SESSION["userID"] = (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? $user["BKNetID"]: 
                                     ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? $user["id"] : "");
@@ -48,6 +49,7 @@ class LogInController {
     public function forgotPassword() {
         require_once "./Views/forgotPassword.php";
     }
+    
     public function resetPasswordRequest() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id = $_POST["id"];
@@ -72,10 +74,11 @@ class LogInController {
             $content = "
                 <p>Xin chào <strong>{$user["name"]}</strong>,</p>
                 <p>Hệ thống quản lý và đặt chỗ không gian tự học thông minh (<strong>BK Study Space</strong>) đã nhận yêu cầu đổi mật khẩu tài khoản của bạn.</p>
-                <p>Để thực hiện thay đổi mật khẩu cho tài khoản (<strong>ID = {$user["id"]}</strong>), bạn vui lòng truy cập đường dẫn này: 
-                    <a href='$resetLink' style='color: #007bff; text-decoration: none; font-weight: bold;'>Link</a>, và nhập
+                <p>Để thực hiện thay đổi mật khẩu cho tài khoản (<strong>ID = {$user["id"]}</strong>), bạn vui lòng truy cập đường dẫn này
+                    <a href='$resetLink' style='color: #007bff; text-decoration: none; font-weight: bold;'>Link</a> hoặc quét mã QR, và nhập
                 </p>
                 <h3><strong>{$token}</strong></h3>
+                <img src='https://quickchart.io/qr?text=" . urlencode($resetLink) . "&size=200' alt='QR Code'>
                 <p><em>Vì lý do bảo mật, vui lòng không chia sẻ mã trên cho bất kỳ ai.</em></p>
                 <p>Trân trọng,</p>
                 <p><strong>BK Study Space</strong></p>
