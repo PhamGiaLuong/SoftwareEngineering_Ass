@@ -22,6 +22,15 @@ class AccountController {
 
         require_once('./Views/account.php');
     }
+
+    public function otherInfo($id) {
+        $userModel = new Users();
+        $user = null;
+
+        $user = $userModel->getUserByID($id);
+        $note = "other";
+        require_once('./Views/account.php');
+    }
 }
 
 ?>

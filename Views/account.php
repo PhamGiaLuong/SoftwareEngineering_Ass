@@ -14,6 +14,7 @@
         </div>
         <div class="col-10 m-2">
             <div class="col-12 d-flex flex-wrap px-3 my-2">
+                <?php if (!isset($note)): ?>
                 <div class="col-3">
                     <strong>ID</strong>
                 </div>
@@ -23,6 +24,7 @@
                             (($_SESSION["DB"] == "Staff") ? $user["id"] : "");
                     ?>
                 </div>
+                <?php endif; ?>
             </div>
             <div class="col-12 d-flex flex-wrap px-3 my-2">
                 <div class="col-3">
@@ -58,6 +60,7 @@
             </div>
         </div>
     </div>
+    <?php if (!isset($note)): ?>
     <div class="d-flex flex-wrap align-items-center justify-content-center col-12">
         <?php if ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin"): ?>
         <div class="col-md-3 col-5 d-flex flex-wrap align-items-center justify-content-center">
@@ -68,6 +71,7 @@
             <a class="btn btn-secondary" href="/SE_Ass_Code/index.php?url=history" role="button">Lịch sử đặt phòng</a>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 
 <?php include('footer.php'); ?>

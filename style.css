@@ -5,9 +5,14 @@ body {
     font-size: 18px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     font-family: 'Signika Negative', sans-serif;
     color: #030391;
+}
+h3, h4, h5 {
+    font-family: 'Asap', sans-serif;
+    color: #030391;
+    font-weight: bold;
 }
 
 a {
@@ -31,14 +36,32 @@ a {
     background-color: transparent;
     border: 2px solid #222f3e;
     color: #222f3e;
+    font-weight: bold;
 }
 .btn-outline-main:hover {
     background-color: #222f3e;
     color: white;
 }
-/* Tiêu đề table */
-.custom-thead {
-    background-color: #222f3e !important;
+.btn-outline-blue {
+    background-color: transparent;
+    border: 2px solid #030391;
+    color: #030391;
+    font-weight: bold;
+}
+.btn-outline-blue:hover {
+    background-color: #030391;
+    color: white;
+}
+/* Come-in annimation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* -----------------Width-------------------- */

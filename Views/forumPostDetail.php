@@ -42,7 +42,13 @@
                 </div>
                 <div class="col-10 px-3">
                     <p class="m-0">
-                        <strong> <?= $post["author"]["name"];?> </strong>
+                        <?php if (isset($_SESSION["name"])  && $_SESSION["name"] === $post["author"]["name"]): ?>
+                            <a href="/SE_Ass_Code/index.php?url=account"> 
+                        <?php else: ?>
+                            <a href="/SE_Ass_Code/index.php?url=account/otherInfo/<?= ($post['author']['role'] == 'admin' || $post['author']['role'] == 'staff') ? $post['author']['id'] : $post['author']['BKNetID']; ?>"> 
+                        <?php endif; ?>
+                            <strong><?= $post["author"]["name"];?></strong> 
+                        </a>
                         <i class="opacity-50 fs-6"><?php 
                             $roles = [
                                 "student" => "Sinh viên",
@@ -104,9 +110,9 @@
         </div>
 
         <!-- Replies -->
-        <div class="col-12 d-flex flex-wrap justify-content-end gap-2 mt-2" id="postReplies">
+        <div class="col-12 d-flex flex-wrap justify-content-end gap-2 mt-2 fade-in" id="postReplies">
             <?php foreach($post['replies'] as $reply): ?>
-                <div class="col-11 border border-2 rounded-3 p-2">
+                <div class="col-11 border border-2 rounded-3 p-2 fade-in">
                     <!-- Thông tin author -->
                     <div class="col-12 d-flex">
                         <div class="col-12 rounded-circle overflow-hidden border"
@@ -114,7 +120,13 @@
                         </div>
                         <div class="col-10 px-3">
                             <p class="m-0">
-                                <strong> <?= $reply["author"]["name"];?> </strong>
+                            <?php if (isset($_SESSION["name"])  && $_SESSION["name"] === $reply["author"]["name"]): ?>
+                                <a href="/SE_Ass_Code/index.php?url=account"> 
+                            <?php else: ?>
+                                <a href="/SE_Ass_Code/index.php?url=account/otherInfo/<?= ($reply['author']['role'] == 'admin' || $reply['author']['role'] == 'staff') ? $reply['author']['id'] : $reply['author']['BKNetID']; ?>"> 
+                            <?php endif; ?>
+                                <strong><?= $reply["author"]["name"];?></strong> 
+                            </a>
                                 <i class="opacity-50 fs-6"><?php 
                                     $roles = [
                                         "student" => "Sinh viên",

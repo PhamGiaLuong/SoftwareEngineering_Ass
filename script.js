@@ -127,6 +127,24 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    // Chọn tất cả các phần tử có class "fade-in"
+    const fadeIns = document.querySelectorAll(".fade-in");
+
+    // Hàm xử lý khi cuộn trang
+    function handleScroll() {
+        fadeIns.forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                element.classList.add("visible");
+            }
+        });
+    }
+
+    // Lắng nghe sự kiện cuộn trang
+    window.addEventListener("scroll", handleScroll);
+
+    // Gọi một lần khi trang tải để kiểm tra các phần tử đã có sẵn trong viewport
+    handleScroll();
 });
 
 

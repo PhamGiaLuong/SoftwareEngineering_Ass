@@ -30,6 +30,7 @@ class LogInController {
 
             $userModel = new Users();
             $user = $userModel->authenticate($id, $password);
+            $_SESSION["name"] = $user["name"];
             $_SESSION["avatar"] = $user["image"];
 
             if ($user) {
