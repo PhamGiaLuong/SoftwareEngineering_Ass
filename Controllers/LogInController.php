@@ -37,11 +37,11 @@ class LogInController {
                 $_SESSION["userID"] = (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? $user["BKNetID"]: 
                                     ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? $user["id"] : "");
                 $_SESSION['Role'] = isset($_SESSION["DB"]) ? $user["role"] : "";
-                header("Location: /SE_Ass_Code/index.php?url=home"); // Chuyển về trang chủ
+                header("Location: /SoftwareEngineering_Ass/index.php?url=home"); // Chuyển về trang chủ
                 exit();
             } else {
                 $_SESSION["error"] = "Tên ID hoặc mật khẩu không đúng!";
-                header("Location: /SE_Ass_Code/index.php?url=logIn");
+                header("Location: /SoftwareEngineering_Ass/index.php?url=logIn");
                 exit();
             }
         }
@@ -59,7 +59,7 @@ class LogInController {
             $user = $userModel->getUserByID($id);
             if (!$user) {
                 $_SESSION["error"] = "Không tìm thấy ID!";
-                header("Location: /SE_Ass_Code/index.php?url=logIn/forgotPassword");
+                header("Location: /SoftwareEngineering_Ass/index.php?url=logIn/forgotPassword");
                 exit();
             }
 
@@ -70,7 +70,7 @@ class LogInController {
 
             $mailer = new Mailer();
             // Tạo đường dẫn đặt lại mật khẩu
-            $resetLink = "http://localhost/SE_Ass_Code/index.php?url=logIn/resetPassword";
+            $resetLink = "http://localhost/SoftwareEngineering_Ass/index.php?url=logIn/resetPassword";
             $title = "Reset password";
             $content = "
                 <p>Xin chào <strong>{$user["name"]}</strong>,</p>
@@ -106,17 +106,17 @@ class LogInController {
             $userModel = new Users();
             if ($userModel->updatePasswordWithToken($token, $newPassword)) {
                 $_SESSION["success"] = "Mật khẩu đã được đặt lại thành công. Vui lòng đăng nhập.";
-                header("Location: /SE_Ass_Code/index.php?url=logIn");
+                header("Location: /SoftwareEngineering_Ass/index.php?url=logIn");
             } else {
                 $_SESSION["error"] = "Token không hợp lệ hoặc đã hết hạn.";
-                header("Location: /SE_Ass_Code/index.php?url=logIn/resetPassword");
+                header("Location: /SoftwareEngineering_Ass/index.php?url=logIn/resetPassword");
             }
         }
     }
 
     public function logout() {
         session_destroy();
-        header("Location: /SE_Ass_Code/index.php?url=loginOption");
+        header("Location: /SoftwareEngineering_Ass/index.php?url=loginOption");
         exit();
     }
 }

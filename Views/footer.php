@@ -52,7 +52,7 @@
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/SE_Ass_Code/script.js"></script>
+    <script src="/SoftwareEngineering_Ass/script.js"></script>
 
     </body>
 </html>

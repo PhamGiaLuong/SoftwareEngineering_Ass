@@ -6,7 +6,7 @@ require_once "./Models/users.php";
 class AccountController {
     public function index(){
         if (!isset($_SESSION["DB"]) || !isset($_SESSION["userID"])) {
-            header("Location: /SE_Ass_Code/index.php?url=loginOption");
+            header("Location: /SoftwareEngineering_Ass/index.php?url=loginOption");
             exit();
         }
 
@@ -16,7 +16,7 @@ class AccountController {
         $user = $userModel->getUserByID($_SESSION["userID"]);
         
         if ($user === null) {
-            header("Location: /SE_Ass_Code/index.php?url=loginOption");
+            header("Location: /SoftwareEngineering_Ass/index.php?url=loginOption");
             exit();
         }
 

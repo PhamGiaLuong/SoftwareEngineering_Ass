@@ -236,4 +236,13 @@ a {
 
 /* THE HUNG------------------------------------------------------------------------------- */
 
+/* Override lại các styles mặc định của Bootstrap */
+.btn.btn-primary.mb-3:hover {
+    transform: scale(0.8) !important;
+    transition: transform 0.3s ease !important;
+}
 
+
+
+  
+  
