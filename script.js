@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             let formData = new FormData(this);
 
-            fetch("/SoftwareEngineering_Ass/index.php?url=forum/addNewPost", {
+            fetch("/SE_Ass_Code/index.php?url=forum/addNewPost", {
                 method: "POST",
                 body: formData,
             })
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             let formData = new FormData(this);
 
-            fetch("/SoftwareEngineering_Ass/index.php?url=forum/addNewReply", {
+            fetch("/SE_Ass_Code/index.php?url=forum/addNewReply", {
                 method: "POST",
                 body: formData,
             })
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Kiểm tra và xử lý bộ lọc topic
     if (topicSelect && postList) {
         function fetchPosts(topic) {
-            fetch(`/SoftwareEngineering_Ass/index.php?url=forum/getTopic/${topic}`)
+            fetch(`/SE_Ass_Code/index.php?url=forum/getTopic/${topic}`)
                 .then(response => response.json())
                 .then(posts => {
                     postList.innerHTML = ""; // Xóa danh sách cũ
@@ -91,13 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             let lockIcon = post.status === "Đã khóa" ? "bi-unlock-fill" : "bi-lock-fill";
                             let lockAction = post.status === "Đã khóa" ? "unlockPost" : "lockPost";
                         
-                            lockButton = `<button class="btn btn-main lock-btn" onclick="location.href='/SoftwareEngineering_Ass/index.php?url=forum/${lockAction}/${post.id}'">
+                            lockButton = `<button class="btn btn-main lock-btn" onclick="location.href='/SE_Ass_Code/index.php?url=forum/${lockAction}/${post.id}'">
                                             <i class="bi fs-5 ${lockIcon}"></i> ${lockText}
                                           </button>`;
                         }
         
                         row.innerHTML = `
-                            <td><a href="/SoftwareEngineering_Ass/index.php?url=forum/detail/${post.id}">${post.title}</a></td>
+                            <td><a href="/SE_Ass_Code/index.php?url=forum/detail/${post.id}">${post.title}</a></td>
                             <td>${post.topic}</td>
                             <td>${post.author.name}</td>
                             <td>${post.time}</td>

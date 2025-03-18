@@ -51,11 +51,11 @@ class ForumController {
 
             $forum = new Forums();
             if ($forum->addNewReply($reply)) {
-                header("Location: /SoftwareEngineering_Ass/index.php?url=forum/detail/" . $_POST["post_id"]);
+                header("Location: /SE_Ass_Code/index.php?url=forum/detail/" . $_POST["post_id"]);
                 exit();
             } else {
                 $_SESSION["error"] = "Không tìm thấy bài viết!";
-                header("Location: /SoftwareEngineering_Ass/index.php?url=forum");
+                header("Location: /SE_Ass_Code/index.php?url=forum");
                 exit();
             }
         }
@@ -93,22 +93,22 @@ class ForumController {
     public function lockPost($postID) {
         $forum = new Forums();
         if ($forum->lockPost($postID)) {
-            header("Location: /SoftwareEngineering_Ass/index.php?url=forum");
+            header("Location: /SE_Ass_Code/index.php?url=forum");
             exit();
         } else {
             $_SESSION["error"] = "Không tìm thấy bài viết!";
-            header("Location: /SoftwareEngineering_Ass/index.php?url=forum");
+            header("Location: /SE_Ass_Code/index.php?url=forum");
             exit();
         }
     }
     public function unlockPost($postID) {
         $forum = new Forums();
         if ($forum->unlockPost($postID)) {
-            header("Location: /SoftwareEngineering_Ass/index.php?url=forum");
+            header("Location: /SE_Ass_Code/index.php?url=forum");
             exit();
         } else {
             $_SESSION["error"] = "Không tìm thấy bài viết!";
-            header("Location: /SoftwareEngineering_Ass/index.php?url=forum");
+            header("Location: /SE_Ass_Code/index.php?url=forum");
             exit();
         }
     }

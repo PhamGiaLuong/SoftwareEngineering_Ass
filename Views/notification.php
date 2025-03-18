@@ -1,6 +1,6 @@
 <?php include('header.php'); ?>
 <div class="container "
-    style="background: url('/SoftwareEngineering_Ass_Code/Images/Notify.png'); background-repeat: no-repeat; background-size: 80vw; height: 55vh; background-position:right;">
+    style="background: url('/SE_Ass_Code/Images/Notify.png'); background-repeat: no-repeat; background-size: 80vw; height: 55vh; background-position:right;">
     
     <div class="d-flex h-75">
         <h1 class=" m-5">
