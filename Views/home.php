@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php include('header.php'); ?>
 
     <!-- Welcome image -->

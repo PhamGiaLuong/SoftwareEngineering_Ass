@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -26,15 +29,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <script>
             tinymce.init({
                 selector: '#form_content',
-                plugins: [
-                // Core editing features
-                'anchor', 'autolink', 'charmap', 'code', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                // Your account includes a free trial of TinyMCE premium features
-                // Try the most popular premium features until Mar 17, 2025:
-                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 
-                'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 
-                'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-                ],
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
                 extended_valid_elements: 'a[href|target|title],img[src|alt|title|width|height],table[border|cellspacing|cellpadding]', // Cho phép chỉnh sửa
                 forced_root_block: '',
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
@@ -68,21 +63,21 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="offcanvas offcanvas-end text-bg-dark w-xs-50 w-sm-30" tabindex="-1" id="offcanvasDarkNavbar"
                     aria-labelledby="offcanvasDarkNavbarLabel" >
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">BK STUDY SPACE</h5>
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Smart Study Space Management and Reservation System</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end align-items-center flex-grow-1 pe-3">
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo ($TAB == "home") ? "active" : ""; ?>" 
+                                <a class="nav-link nlink <?php echo (TAB == "home") ? "active" : ""; ?>" 
                                 aria-current="page" href="/SE_Ass_Code/index.php?url=home" data-tab="home">
                                     TRANG CHỦ
                                 </a>
                             </li>
                             <?php if (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin")): ?>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo ($TAB == "manage") ? "active" : ""; ?>" 
+                                <a class="nav-link nlink <?php echo (TAB == "manage") ? "active" : ""; ?>" 
                                 href="/SE_Ass_Code/index.php?url=manage" data-tab="manage">
                                     QUẢN LÝ
                                 </a>
@@ -90,7 +85,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php endif; ?>
                             <?php if (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "admin")): ?>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo ($TAB == "admin") ? "active" : ""; ?>" 
+                                <a class="nav-link nlink <?php echo (TAB == "admin") ? "active" : ""; ?>" 
                                 href="/SE_Ass_Code/index.php?url=admin" data-tab="admin">
                                     QUẢN TRỊ
                                 </a>
@@ -98,13 +93,13 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php endif; ?>
                             <?php if (isset($_SESSION["Role"])): ?>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo ($TAB == "booking") ? "active" : ""; ?>" 
+                                <a class="nav-link nlink <?php echo (TAB == "booking") ? "active" : ""; ?>" 
                                 href="/SE_Ass_Code/index.php?url=booking" data-tab="booking">
                                     ĐẶT PHÒNG
                                 </a>
                             </li>
                             <li class="nav-item px-2">
-                                <a class="nav-link nlink <?php echo ($TAB == "forum") ? "active" : ""; ?>" 
+                                <a class="nav-link nlink <?php echo (TAB == "forum") ? "active" : ""; ?>" 
                                 href="/SE_Ass_Code/index.php?url=forum" data-tab="forum">
                                     <span class="material-icons-round">forum</span>
                                 </a>
