@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -299,13 +302,14 @@ class Forums {
         
     ];   
     
-    
+    // Chức năng: đồng bộ data từ session
     public function __construct() {
         if (isset($_SESSION["Forums"])) {
             $this->Forums = $_SESSION["Forums"];
         }
     }
 
+    // Chức năng: thêm bài viết mới
     public function addNewPost($post) {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $post["id"] = count($this->Forums) + 1;
@@ -318,6 +322,7 @@ class Forums {
         return true;
     }
 
+    // Chức năng: thêm phản hồi cho bài viết
     public function addNewReply($reply) {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $newRep = [
@@ -336,6 +341,7 @@ class Forums {
         return false;
     }
 
+    // Chức năng: trích xuất thông tin tất cả bài viết
     public function getAllPosts() {
         if (isset($_SESSION["Forums"])) {
             $this->Forums = $_SESSION["Forums"];
@@ -350,6 +356,7 @@ class Forums {
         return $result;
     }
 
+    // Chức năng: trích xuất các bài viết của người dùng (đã đăng)
     public function getMyOwnPosts() {
         if (isset($_SESSION["Forums"])) {
             $this->Forums = $_SESSION["Forums"];
@@ -367,6 +374,7 @@ class Forums {
         return $result;
     }
 
+    // Chức năng: trích xuất bài viết theo ID
     public function getPostByID($ID) {
         foreach ($this->Forums as &$post) {
             if ($post["id"] == $ID){
@@ -378,6 +386,7 @@ class Forums {
         return null;
     }
 
+    // Chức năng: trích xuất các bài viết thuộc topic được yêu cầu
     public function getPostsByTopic($topic) {
         $topics = [
             "selfStudy" =>"Phòng tự học",
@@ -418,6 +427,7 @@ class Forums {
     }
     
 
+    // Chức năng: trích xuất thông tin chi tiết của bài viết theo ID
     public function getPostDetail($postID) {
         $result = null;
         foreach ($this->Forums as $post) {
@@ -439,6 +449,7 @@ class Forums {
         return null;
     }
 
+    // Chức năng: khóa tính năng phản hồi của bài viết
     public function lockPost($postID) {
         foreach ($this->Forums as &$post) {
             if ($post["id"] == $postID) {
@@ -449,6 +460,8 @@ class Forums {
         }
         return false;
     }
+    
+    // Chức năng: mở khóa tính năng phản hồi cho bài viết
     public function unlockPost($postID) {
         foreach ($this->Forums as &$post) {
             if ($post["id"] == $postID) {

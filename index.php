@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php
     require_once 'Core/router.php';
     $url = $_GET['url'] ?? '';

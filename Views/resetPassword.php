@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -59,6 +62,10 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php endif; ?>
                         <form action="/SE_Ass_Code/index.php?url=logIn/updatePassword" method="POST" class="mt-md-5 m-3"
                             onsubmit="return validatePassword(event)">
+                            <div class="user-box">
+                                <input type="text" id="userID" name="userID" required>
+                                <label for="token">ID</label>
+                            </div>
                             <div class="user-box">
                                 <input type="text" id="token" name="token" required>
                                 <label for="token">Nhập token</label>
