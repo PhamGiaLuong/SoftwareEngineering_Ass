@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
-<?php
+<?php 
+
+// Author: Gia Luong
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -335,7 +335,7 @@ class Forums {
             if ($post["id"] == $reply["id"]) {
                 $post["replies"][] = $newRep;
                 $_SESSION["Forums"] = $this->Forums;
-                return true;
+                return $newRep;
             }
         }
         return false;
@@ -361,7 +361,7 @@ class Forums {
         if (isset($_SESSION["Forums"])) {
             $this->Forums = $_SESSION["Forums"];
         }
-        $result = null;
+        $result = [];
         $user = new Users(); 
         $author = $user->getUserByID($_SESSION["userID"]);
         foreach ($this->Forums as $post) {
@@ -375,19 +375,20 @@ class Forums {
     }
 
     // Chức năng: trích xuất bài viết theo ID
-    public function getPostByID($ID) {
-        foreach ($this->Forums as &$post) {
-            if ($post["id"] == $ID){
-                $user = new Users(); 
-                $post["author"] = $user->getUserByID($post["author"]);
-                return $post;
-            }
-        }
-        return null;
-    }
+    // public function getPostByID($ID) {
+    //     foreach ($this->Forums as &$post) {
+    //         if ($post["id"] == $ID){
+    //             $user = new Users(); 
+    //             $post["author"] = $user->getUserByID($post["author"]);
+    //             return $post;
+    //         }
+    //     }
+    //     return null;
+    // }
 
     // Chức năng: trích xuất các bài viết thuộc topic được yêu cầu
     public function getPostsByTopic($topic) {
+        $result = [];
         $topics = [
             "selfStudy" =>"Phòng tự học",
             "mentorring" => "Phòng học đôi",
@@ -402,11 +403,11 @@ class Forums {
         ];
 
         if ($topic === "all") {
-            return json_encode($this->getAllPosts());
+            $result = $this->getAllPosts();
         }
 
         if ($topic === "mine") {
-            return json_encode($this->getMyOwnPosts());
+            $result = $this->getMyOwnPosts();
         }
 
         $topicName = $topic;
@@ -414,7 +415,6 @@ class Forums {
             $topicName = $topics[$topic];
         }
 
-        $result = [];
         $user = new Users(); 
         foreach ($this->Forums as $post) {
             if ($post["topic"] === $topicName) {
@@ -422,8 +422,8 @@ class Forums {
                 $result[] = $post;
             }
         }
-    
-        return count($result) > 0 ? json_encode($result) : json_encode(["error" => "Không có bài viết về chủ đề này"]);
+
+        return $result;
     }
     
 

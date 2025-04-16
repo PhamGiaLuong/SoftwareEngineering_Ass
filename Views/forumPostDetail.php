@@ -1,30 +1,41 @@
 <!-- 
     Author: Gia Luong
  -->
-<?php include('header.php'); ?>
+<?php  
+    // Điều hướng đến tab đăng nhập nếu chưa
+    if (!isset($_SESSION["Role"])) {
+        header("Location: /SE_Ass_Code/index.php?url=loginOption");
+        exit();
+    }
+    include('header.php'); 
+?>
 <div class="container mt-3 d-flex flex-wrap justify-content-center">
     <div class="d-flex justify-content-center col-12 mb-3">
-        <h2>DIỄN ĐÀN BK STUDY SPACE</h2>
+        <a href="/SE_Ass_Code/index.php?url=forum">
+            <h2>DIỄN ĐÀN S3-MRS</h2>
+        </a>
     </div>
-    
+
     <!-- Hiển thị thông báo thành công/thất bại nếu có -->
-    <?php if (isset($_SESSION["error"])): ?>
-        <div class="alert alert-danger text-center m-3" role="alert">
-            <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+    <div class="alert alert-error text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-exclamation-circle"></i>
+            <p class="m-0" id="errorContent"></p>
         </div>
-    <?php endif; ?>
-    <?php if (isset($_SESSION["success"])): ?>
-        <div class="alert alert-success text-center m-3" role="alert">
-            <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+    </div>
+    <div class="alert alert-success text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="successAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-check-circle"></i>
+            <p class="m-0" id="successContent"></p>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- Thông tin của post -->
     <div class="col-12 d-flex flex-wrap justify-content-between">
         <h3 style="font-family: 'Asap', sans-serif;">Tiêu đề: <?= $post["title"];?> </h3>
         <div class="col-12 p-2 d-flex flex-wrap justify-content-sm-between justify-content-center border rounded-2">
             <div class="col-md-5 col-9 col-sm-7 d-flex">
-                <a href="/SE_Ass_Code/index.php?url=forum/showPostsByTopic/<?= $post["topic"];?>">
+                <a href="#" class="topic-link" data-post-id="topic" data-topic="<?= $post['topic'] ?>">
                     <i class="bi fs-5 bi-bookmarks"></i> <?= $post["topic"];?>
                 </a>
             </div>
@@ -45,6 +56,31 @@
                 </a>
             </div>
         </div>
+    </div>
+
+    
+    <div class="collapse col-12" id="details-topic">
+        <div class="overflow-x-auto col-12 my-2">
+            <table class="table table-hover table-bordered mt-1" id="postList">
+                <thead class="table-dark custom-thead">
+                    <tr>
+                        <th style="width: 250px;">Tên bài viết</th>
+                        <th style="width: 180px;">Chủ đề</th>
+                        <th style="width: 150px;">Tác giả</th>
+                        <th style="width: 120px;">Thời gian</th>
+                        <th style="width: 100px;">Trạng thái</th>
+                        <th style="width: 100px;">Phản hồi</th>
+                        <?php if ($_SESSION["Role"] == "admin"): ?>
+                        <th style="width: 10%;">Hành động</th>
+                        <?php endif; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <!-- Hiển thị thanh phân trang -->
+        <div id="pagination"></div>
     </div>
 
     <!-- Nội dung và replies của post -->
@@ -79,7 +115,7 @@
                 </div>
             </div>
             <!-- Nội dung -->
-            <div class="col-12 ms-3 ps-5 mt-2">
+            <div class="col-11 col-md-12 ms-3 ps-5 mt-2">
                 <?php echo htmlspecialchars_decode($post["content"]);?>
             </div>
             <div class="col-12 mt-2 d-flex justify-content-end p-2">
@@ -157,7 +193,7 @@
                         </div>
                     </div>
                     <!-- Nội dung -->
-                    <div class="col-12 ms-3 ps-5">
+                    <div class="col-11 col-md-12 ms-3 ps-5">
                         <?= $reply["content"];?>
                     </div>
                 </div>

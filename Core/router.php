@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
-<?php
+<?php 
+
+// Author: Gia Luong
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

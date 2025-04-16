@@ -95,68 +95,76 @@ $reservation_history = [
         </div>
     </div>
     <div class="overflow-x-auto">
-    <table class="table table-bordered text-center">
-        <thead class="table-dark custom-thead">
-            <tr>
-                <th>Mã đặt phòng</th>
-                <th>Thời gian</th>
-                <th style="width: 20%;">Phòng</th>
-                <th>Vị trí</th>
-                <th>Giờ bắt đầu</th>
-                <th>Giờ kết thúc</th>
-                <th>Trạng thái</th>
-                <th>Báo cáo</th>
-            </tr>
-        </thead>
-        <tbody id="reservationHistoryBody">
-            <?php if (!empty($reservation_history)): ?>
-                <?php foreach ($reservation_history as $reservation): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($reservation['id']); ?></td>
-                        <td><?php echo htmlspecialchars($reservation['date']); ?></td>
-                        <td class="text-start"><?php echo htmlspecialchars($reservation['name']); ?></td>
-                        <td><?php echo htmlspecialchars($reservation['address']); ?></td>
-                        <td><?php echo htmlspecialchars($reservation['start_time']); ?></td>
-                        <td><?php echo htmlspecialchars($reservation['end_time']); ?></td>
-                        <td><?php echo htmlspecialchars($reservation['status']); ?></td>
-                        <td onclick="toggleReplies(<?= $reservation['id']; ?>)" style="color: #030391;">
-                            <?php echo htmlspecialchars(count($reservation['report'])); ?>
-                        </td>
-                    </tr>
-
-                    <tr id="details-<?= $reservation['id']; ?>" class="collapse">
-                        <td colspan="8">
-                            <table class="table mb-0">
-                                <thead class="table-secondary">
-                                    <tr>
-                                        <th style="width: 20%;">Thời gian</th>
-                                        <th class="text-start" style="width: 80%;">Nội dung</th>
-                                        <th style="width: 20%;">Trạng thái</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($reservation['report'] as $report): ?>
-                                        <tr>
-                                            <td><?= $report['date']; ?></td>
-                                            <td class="text-start"><?= $report['content']; ?></td>
-                                            <td><?= $report['status']; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+        <table class="table table-hover table-bordered text-center">
+            <thead class="table-dark custom-thead">
                 <tr>
-                    <td colspan="6" class="text-center">Không tìm thấy lịch sử đặt chỗ</td>
+                    <th style="width: 100px;">Mã đặt phòng</th>
+                    <th style="width: 100px;">Thời gian</th>
+                    <th style="width: 150px;">Phòng</th>
+                    <th style="width: 100px;">Vị trí</th>
+                    <th style="width: 50px;">Số ghế</th>
+                    <th style="width: 100px;">Giờ bắt đầu</th>
+                    <th style="width: 100px;">Giờ kết thúc</th>
+                    <th style="width: 100px;">Trạng thái</th>
+                    <th style="width: 100px;">Báo cáo</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="bookingHistoryBody">
+                <?php if (!empty($bookingList)): ?>
+                    <?php foreach ($bookingList as $reservation): ?>
+                        <tr>
+                            <td><?php echo $reservation['booking_id']; ?></td>
+                            <td class="text-start"><?php echo $reservation['booking_date'] ." ". $reservation['created_at']; ?></td>
+                            <td class="text-start"><?php echo $reservation['room']['name']; ?></td>
+                            <td><?php echo $reservation['room']['address']; ?></td>
+                            <td><?php echo $reservation["seat_number"] == null ? "---" : $reservation["seat_number"]; ?></td>
+                            <td><?php echo $reservation['time_start']; ?></td>
+                            <td><?php echo $reservation['time_end']; ?></td>
+                            <td><?php echo $reservation['status']; ?></td>
+                            <td onclick="toggleReplies(<?= $reservation['booking_id']; ?>)" style="color: #030391;">
+                                <?php echo count($reservation['report']); ?>
+                            </td>
+                        </tr>
+
+                        <tr id="details-<?= $reservation['booking_id']; ?>" class="collapse">
+                            <td colspan="8">
+                                <table class="table table-bordered mb-0">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th style="width: 20%;">Thời gian</th>
+                                            <th class="text-start" style="width: 80%;">Nội dung</th>
+                                            <th style="width: 20%;">Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (count($reservation['report']) <= 0):?>
+                                            <tr>
+                                                <td colspan="6" class="text-center">Không có dữ liệu báo cáo</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php foreach ($reservation['report'] as $report): ?>
+                                            <tr>
+                                                <td><?= $report['created_at']; ?></td>
+                                                <td class="text-start"><?= $report['content']; ?></td>
+                                                <td><?= $report['status']; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6" class="text-center">Không tìm thấy lịch sử đặt chỗ</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
+    <!-- Hiển thị thanh phân trang -->
+    <div id="pagination"></div>
 </div>
 
-<!-- <script src="../assets/js/reservation_history.js"></script> -->
 
 <?php include('footer.php'); ?>

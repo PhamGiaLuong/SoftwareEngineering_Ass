@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
 <?php 
+
+// Author: Gia Luong
+
 require_once "./Models/users.php";
 require_once "./Models/forums.php";
 
@@ -38,10 +38,17 @@ class ForumController {
 
             $forum = new Forums();
             if ($forum->addNewPost($post)) {
-                header("Location: ./Views/forum.php");
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "success" => "Đã thêm bài viết mới thành công!"
+                ]);
                 exit();
             } else {
-                echo "Lỗi: Không tìm thấy bài viết!";
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "error" => "Không thể thêm bài viết mới!"
+                ]);
+                exit();
             }
         }
     }
@@ -56,40 +63,48 @@ class ForumController {
             ];
 
             $forum = new Forums();
-            if ($forum->addNewReply($reply)) {
-                header("Location: /SE_Ass_Code/index.php?url=forum/detail/" . $_POST["post_id"]);
+            $result = $forum->addNewReply($reply);
+            if (isset($result)) {
+                $userModel = new Users();
+                $author = $userModel->getUserByID($reply["author"]);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "success" => "Đã thêm phản hồi thành công!",
+                    "reply" => $result,
+                    "author" => $author
+                ]);
                 exit();
             } else {
-                $_SESSION["error"] = "Không tìm thấy bài viết!";
-                header("Location: /SE_Ass_Code/index.php?url=forum");
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "error" => "Không thể thêm phản hồi!"
+                ]);
                 exit();
             }
         }
     }
 
-    // Chức năng: yêu cầu Models/forums.php trích xuất danh sách bài viết cho topic 
-    public function getTopic($topic){
+    // Chức năng: yêu cầu Models/forums.php trích xuất danh sách bài viết cho topic (ajax)
+    public function getTopic($topic, $page, $limit){
+        $offset = ($page - 1) * $limit;
+
         $forum = new Forums();
-        // $posts = $forum->getPostsByTopic($topic);
-        // return $posts;
         $result = $forum->getPostsByTopic($topic);
 
+        $result = array_reverse($result);
+        $paginatedPosts = array_slice($result, $offset, $limit);
+
         header('Content-Type: application/json');
-        echo $result;
+        echo count($paginatedPosts) > 0 
+            ? json_encode([
+                'posts' => $paginatedPosts,
+                'totalPages' => ceil(count($result) / $limit)
+            ]) 
+            : json_encode(["error" => "Không có bài viết về chủ đề này"]);
+        // echo $result;
         exit;
     }
 
-    public function showPostsByTopic($topic) {
-        $forum = new Forums();
-        $posts = json_decode($forum->getPostsByTopic($topic), true); 
-    
-        if (isset($posts["error"])) {
-            echo "<h2>" . $posts["error"] . "</h2>";
-            return;
-        }
-    
-        include "./Views/forum.php"; 
-    }
 
     // Chức năng: yêu cầu Models/forums.php trích xuất nội dung bài viết
     public function detail($postID) {
@@ -102,12 +117,12 @@ class ForumController {
     public function lockPost($postID) {
         $forum = new Forums();
         if ($forum->lockPost($postID)) {
-            $_SESSION["success"] = "Đã KHÓA bài viết, người dùng KHÔNG thể phản hồi bài viết này.";
-            header("Location: /SE_Ass_Code/index.php?url=forum");
+            header('Content-Type: application/json');
+            echo json_encode(["success" => "Đã KHÓA bài viết, người dùng KHÔNG thể phản hồi bài viết này."]);
             exit();
         } else {
-            $_SESSION["error"] = "Không tìm thấy bài viết!";
-            header("Location: /SE_Ass_Code/index.php?url=forum");
+            header('Content-Type: application/json');
+            echo json_encode(["error" => "Không tìm thấy bài viết!"]);
             exit();
         }
     }
@@ -115,12 +130,12 @@ class ForumController {
     public function unlockPost($postID) {
         $forum = new Forums();
         if ($forum->unlockPost($postID)) {
-            $_SESSION["success"] = "Đã MỞ KHÓA bài viết, người dùng CÓ thể phản hồi bài viết này.";
-            header("Location: /SE_Ass_Code/index.php?url=forum");
+            header('Content-Type: application/json');
+            echo json_encode(["success" => "Đã MỞ KHÓA bài viết, người dùng Có thể phản hồi bài viết này."]);
             exit();
         } else {
-            $_SESSION["error"] = "Không tìm thấy bài viết!";
-            header("Location: /SE_Ass_Code/index.php?url=forum");
+            header('Content-Type: application/json');
+            echo json_encode(["error" => "Không tìm thấy bài viết!"]);
             exit();
         }
     }
