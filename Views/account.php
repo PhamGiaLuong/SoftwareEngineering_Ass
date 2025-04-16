@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php include('header.php'); ?>
 <div class="container d-flex flex-wrap justify-content-center mt-3">
     <div class="d-flex justify-content-center col-12 mb-3">
@@ -9,7 +12,8 @@
                 style="width: 100px; height: 100px; background: url('<?php echo $user["image"]; ?>') center/cover no-repeat;">
             </div>
             <div class="col-md-8 justify-content-center text-md-start text-center col-12 px-3">
-                <h2> <?php echo $user["name"]; ?> </h2>
+                <h2 class="my-1"> <?php echo $user["name"]; ?> </h2>
+                <p class="m-0"> <?= $user["status"] ?></p>
             </div>
         </div>
         <div class="col-10 m-2">

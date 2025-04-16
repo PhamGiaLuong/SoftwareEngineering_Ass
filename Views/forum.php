@@ -1,9 +1,23 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php include('header.php'); ?>
 <div class="container mt-3 d-flex flex-wrap justify-content-center">
     <div class="d-flex justify-content-center col-12 mb-3">
         <h2>DIỄN ĐÀN BK STUDY SPACE</h2>
     </div>
 
+    <!-- Hiển thị thông báo thành công/thất bại nếu có -->
+    <?php if (isset($_SESSION["error"])): ?>
+        <div class="alert alert-danger text-center m-3" role="alert">
+            <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($_SESSION["success"])): ?>
+        <div class="alert alert-success text-center m-3" role="alert">
+            <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+        </div>
+    <?php endif; ?>
     <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-3">
         <div class="d-grid col-5 col-md-3">
             <select id="forumTopicFilter" class="form-select">

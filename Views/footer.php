@@ -1,3 +1,6 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <!-- footer chung cho các tab -->
     <div class="col-12 d-flex flex-wrap mt-3" style="background-color:#495057; color: white; font-family: 'Asap', sans-serif;">
         <div class="col-12 fw-bold p-3 d-flex">
