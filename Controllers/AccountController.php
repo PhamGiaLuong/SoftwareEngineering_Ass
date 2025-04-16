@@ -1,11 +1,12 @@
-<!-- 
-    Author: Gia Luong
- -->
 <?php 
+
+// Author: Gia Luong
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once "./Models/users.php";
+
 class AccountController {
     // Chức năng: hiển thị tab Thông tin tài khoản với thông tin (chi tiết) người dùng từ Models/users.php
     public function index(){

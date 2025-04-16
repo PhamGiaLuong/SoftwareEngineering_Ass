@@ -1,7 +1,14 @@
 <!-- 
     Author: Gia Luong
  -->
-<?php include('header.php'); ?>
+<?php  
+    // Điều hướng đến tab đăng nhập nếu chưa
+    if (!isset($_SESSION["Role"])) {
+        header("Location: /SE_Ass_Code/index.php?url=loginOption");
+        exit();
+    }
+    include('header.php'); 
+?>
 <div class="container d-flex flex-wrap justify-content-center mt-3">
     <div class="d-flex justify-content-center col-12 mb-3">
         <h2>THÔNG TIN TÀI KHOẢN</h2>

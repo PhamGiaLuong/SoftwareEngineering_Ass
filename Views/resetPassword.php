@@ -55,11 +55,21 @@ if (session_status() === PHP_SESSION_NONE) {
                         </h2>
                     </div>
                     <div class="col-md-6 col-12 rounded-5">
-                    <?php if (isset($_SESSION["error"])): ?>
-                        <div class="alert alert-danger text-center m-3" role="alert">
-                            <p><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
-                        </div>
-                    <?php endif; ?>
+                        <!-- Hiển thị thông báo thành công/thất bại nếu có -->
+                        <?php if (isset($_SESSION["error"])): ?>
+                            <div class="alert alert-danger text-center m-3 d-flex align-items-center gap-3" role="alert">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION["success"])): ?>
+                            <div class="alert alert-success text-center m-3 d-flex align-items-center gap-3" role="alert">
+                                <i class="bi bi-check-circle"></i>
+                                <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php endif; ?>
                         <form action="/SE_Ass_Code/index.php?url=logIn/updatePassword" method="POST" class="mt-md-5 m-3"
                             onsubmit="return validatePassword(event)">
                             <div class="user-box">

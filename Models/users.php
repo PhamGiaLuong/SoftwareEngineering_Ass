@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
-<?php
+<?php 
+
+// Author: Gia Luong
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,6 +12,8 @@ class Users {
     ];
      
     private $Staffs = [
+        ["id" => "250000", "password" => "admin0", "role" => "admin", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
+            "name" => "Vu Thích", "email" => "thich.vu@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
         ["id" => "250001", "password" => "admin1", "role" => "admin", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
             "name" => "Thế Hưng A", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
         ["id" => "250002", "password" => "admin2", "role" => "admin", "image" => "/SE_Ass_Code/Images/a6.png",  "status" => "Đang hoạt động",
@@ -20,6 +22,8 @@ class Users {
             "name" => "Tuấn Lâm A", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
         ["id" => "250004", "password" => "admin4", "role" => "admin", "image" => "/SE_Ass_Code/Images/a3.png", "status" => "Đang hoạt động",
             "name" => "Gia Lương A", "email" => "pham15032004@gmail.com", "faculty" => "Phòng Quản trị thiết bị"],
+        ["id" => "251100", "password" => "staff0", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
+            "name" => "Đặng Vi", "email" => "vi.dang@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "251101", "password" => "staff1", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
             "name" => "Thế Hưng B", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
         ["id" => "251102", "password" => "staff2", "role" => "staff", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
@@ -43,22 +47,24 @@ class Users {
             "name" => "Vũ Mai Hương", "email" => "huong.vumai@hcmut.edu.vn", "faculty" => "Khoa Cơ khí"],
         ["BKNetID" => "2213321", "password" => "Linh", "role" => "student", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
             "name" => "Hà Mỹ Linh", "email" => "linh.ha2213321@hcmut.edu.vn", "faculty" => "Khoa Khoa học ứng dụng"],
-        ["BKNetID" => "2251001", "password" => "Minh", "role" => "student", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
-            "name" => "Phạm Chí Minh", "email" => "minh.phamchi@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Hóa học"],
+        ["BKNetID" => "2251001", "password" => "Bang", "role" => "student", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
+            "name" => "Phạm Băng Băng", "email" => "bang.phambb@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Hóa học"],
         ["BKNetID" => "2111025", "password" => "Vy", "role" => "student", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
             "name" => "Trần Chí Vỹ", "email" => "vy.tranchi@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Giao thông"],
         ["BKNetID" => "2151052", "password" => "Nhu", "role" => "student", "image" => "/SE_Ass_Code/Images/a5.png", "status" => "Đang hoạt động",
             "name" => "Lâm Tâm Như", "email" => "nhu.lam1052@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Giao thông"],
         ["BKNetID" => "2113612", "password" => "Tri", "role" => "student", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
             "name" => "Vũ Minh Trí", "email" => "tri.vuminh@hcmut.edu.vn", "faculty" => "Khoa Tài nguyên và Môi trường"],
-        ["BKNetID" => "2121221", "password" => "Dang", "role" => "student", "image" => "/SE_Ass_Code/Images/a5.png", "status" => "Đang hoạt động",
-            "name" => "Lê Đăng", "email" => "dang.leden@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Xây dựng"],
+        ["BKNetID" => "2121221", "password" => "Loc", "role" => "student", "image" => "/SE_Ass_Code/Images/a5.png", "status" => "Đang hoạt động",
+            "name" => "Bạch Lộc", "email" => "loc.bachlu@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Xây dựng"],
         ["BKNetID" => "2300012", "password" => "Khai", "role" => "teacher", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
             "name" => "Nguyễn Phúc Khải", "email" => "khai.nguyen@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2300023", "password" => "Tam", "role" => "teacher", "image" => "/SE_Ass_Code/Images/a3.png", "status" => "Đang hoạt động",
             "name" => "Lý Minh Tâm", "email" => "tam.ly@hcmut.edu.vn", "faculty" => "Khoa Kỹ thuật Hóa học"],
         ["BKNetID" => "2300451", "password" => "Phong", "role" => "teacher", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
-            "name" => "Nguyễn Đăng Phong", "email" => "phong.nguyen@hcmut.edu.vn", "faculty" => "Khoa Khoa học ứng dụng"]
+            "name" => "Nguyễn Đăng Phong", "email" => "phong.nguyen@hcmut.edu.vn", "faculty" => "Khoa Khoa học ứng dụng"],
+        ["BKNetID" => "2510322", "password" => "khach", "role" => "student", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
+            "name" => "Mạnh Tử Nghĩa", "email" => "nghia.manhtu@hcmut.edu.vn", "faculty" => "Khoa Khoa học ứng dụng"]
     ];
 
     // Chức năng: đồng bộ data từ session
@@ -76,7 +82,7 @@ class Users {
 
     // Chức năng: trích xuất danh sách Staff/Admin
     public function getStaffsList() {
-        $StaffsList = null;
+        $StaffsList = [];
         foreach ($this->Staffs as $user) {
             $staff = [
                 "id" => $user["id"],
@@ -93,12 +99,12 @@ class Users {
     }
 
     // Chức năng: thêm Staff/Admin
-    public function addNewMember($name, $role, $image, $email, $faculty) {
+    public function addNewMember($name, $role, $email, $faculty) {
         $user = [
             "id" => $this->NumOfMember[$role] + 1,
             "password" => "01042025",
             "role" => $role,
-            "image" => $image,
+            "image" => "/SE_Ass_Code/Images/a1.png",
             "status" => "Đang hoạt động",
             "name" => $name,
             "email" => $email,

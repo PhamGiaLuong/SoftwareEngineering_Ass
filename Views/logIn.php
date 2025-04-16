@@ -54,28 +54,35 @@ if (session_status() === PHP_SESSION_NONE) {
                             ?>
                         <br>
                             <?php 
-                                echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "HCMUT_SSO" : 
-                                        ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? "BK STUDY SPACE" : "");
+                                echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "HCMUT_SSO" :  "BK STUDY SPACE";
                             ?>
                         </h2>
                     </div>
                     <div class="col-md-6 col-12 rounded-5 pt-md-4">
-                    <?php if (isset($_SESSION["error"])): ?>
-                        <div class="alert alert-danger text-center m-3" role="alert">
-                            <p><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($_SESSION["success"])): ?>
-                        <div class="alert alert-success text-center m-3" role="alert">
-                            <p><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
-                        </div>
-                    <?php endif; ?>
+                        <!-- Hiển thị thông báo thành công/thất bại nếu có -->
+                        <?php if (isset($_SESSION["error"])): ?>
+                            <div class="alert alert-danger text-center m-3 d-flex align-items-center gap-3" role="alert">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION["success"])): ?>
+                            <div class="alert alert-success text-center m-3 d-flex align-items-center gap-3" role="alert">
+                                <i class="bi bi-check-circle"></i>
+                                <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                            </div>
+                        <?php endif; ?>
                         <form action="/SE_Ass_Code/index.php?url=logIn/authenticate" method="POST" class="mt-md-5 m-3">
                             <div class="user-box">
                                 <input type="text" id="id" name="id" required>
                                 <label for="id"><?php 
-                                    echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "BKNetID" : 
-                                        ((isset($_SESSION["DB"]) && $_SESSION["DB"] == "Staff") ? "ID" : "");
+                                    if (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") echo "BKNetID"; 
+                                    else {
+                                        $_SESSION["DB"] = "Staff";
+                                        echo "ID";
+                                    }  
                                 ?></label>
                             </div>
                             <div class="user-box mb-md-5">

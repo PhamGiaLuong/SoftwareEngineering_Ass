@@ -2,7 +2,7 @@
 body {
     font-family: 'Asap', sans-serif;
     padding-top: 70px;
-    font-size: 16px;
+    /* font-size: 15px; */
 }
 
 h1, h2 {
@@ -227,7 +227,24 @@ a {
     border-color: #222f3e;
     color: white;
 }
+.custom-pagination {
+    margin-top: 20px;
+}
 
+.page-item.active .page-link {
+    background-color: #030391;
+    border-color: #030391;
+}
+
+.page-link {
+    color: #030391;
+    cursor: pointer;
+}
+
+.page-link:hover {
+    color: #030391;
+    background-color: #f8f9fa;
+}
 
 /* HAI DUONG------------------------------------------------------------------------------- */
 
@@ -237,10 +254,115 @@ a {
 /* THE HUNG------------------------------------------------------------------------------- */
 
 /* Override lại các styles mặc định của Bootstrap */
-.btn.btn-primary.mb-3:hover {
-    transform: scale(0.8) !important;
-    transition: transform 0.3s ease !important;
+.btn-custom {
+    background-color: #030391;
+    color: white;
+    border-radius: 15px;  
+    padding: 10px 20px;  /* Thêm khoảng cách giữa văn bản và viền */
+    border: none;  /* Xóa viền mặc định */
+    font-size: 15px;  /* Cỡ chữ */
+    cursor: pointer;  /* Khi di chuột qua nút sẽ thay đổi con trỏ */
 }
+
+.btn-custom:hover {
+    background-color: #020270;  /* Màu nền khi hover */
+    color: white;
+}
+
+.btn-report {
+    background-color: #73696A;
+    color: white;
+    border-radius: 15px;  
+    padding: 10px 20px;  /* Thêm khoảng cách giữa văn bản và viền */
+    border: none;  /* Xóa viền mặc định */
+    font-size: 15px;  /* Cỡ chữ */
+    cursor: pointer;  /* Khi di chuột qua nút sẽ thay đổi con trỏ */
+    right: 20px;
+}
+
+.btn-report:hover {
+    background-color: #4C3B3C;  /* Màu nền khi hover */
+    color: white;
+}
+
+
+.table td, .table th {
+    vertical-align: middle;
+}
+.table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    margin: 0 5px;
+}
+
+
+/* modal báo cáo tình trạng không gian học tập */
+.modal-content {
+    background-color: #f5f5f5; /* Màu nền của modal */
+    border-radius: 20px; /* Bo góc của modal */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng cho modal */
+    border: 1px solid black; /* Loại bỏ viền mặc định */
+}
+
+/* Tùy chỉnh tiêu đề modal */
+.modal-header {
+    color: #030391; /* Màu chữ của tiêu đề */
+    border-bottom: 1px solid #000000; /* Thêm viền dưới header */
+    padding: 5px;
+    /* font-size: 1.25rem; Cỡ chữ cho tiêu đề */
+}
+
+/* Tùy chỉnh nút đóng trong modal */
+.modal-header .btn-close {
+    color: rgb(109, 108, 108);
+    font-size: 1.25rem; /* Cỡ chữ cho nút đóng */
+    padding: 0 20px;
+}
+
+.modal-header .modal-title {
+    padding: 0 10px;
+}
+
+/* Tùy chỉnh phần nội dung modal */
+.modal-body {
+    padding: 10px; /* Khoảng cách nội dung modal */
+    font-family: 'Arial', sans-serif; /* Thay đổi font chữ cho nội dung */
+    color: #333; /* Màu chữ của nội dung */
+}
+
+/* Tùy chỉnh form input trong modal */
+.underline-input {
+    border: none; 
+    border-bottom: 1px solid black; /* Đặt đường gạch dưới */
+    outline: none; /* Xóa outline khi ô nhập được chọn */
+    background-color: transparent; /* Xóa nền */
+    padding: 5px 0; /* Thêm khoảng cách cho text */
+}
+
+.underline-input:focus {
+    border-bottom-color: #083f79; /* Thay đổi màu khi ô nhập được chọn */
+    box-shadow: none; /* Xóa hiệu ứng shadow khi focus */
+}
+
+/* Tùy chỉnh phần footer của modal */
+.modal-footer {
+    border-top: 2px solid #ddd; /* Thêm viền trên cho footer */
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.underline {
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: transparent; /* Xóa nền */
+    padding: 5px 0; /* Thêm khoảng cách cho text */
+}
+
+
+
+
 
 
 

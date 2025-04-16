@@ -1,25 +1,39 @@
 <!-- 
     Author: Gia Luong
  -->
-<?php include('header.php'); ?>
+<?php  
+    // Điều hướng đến tab đăng nhập nếu chưa
+    if (!isset($_SESSION["Role"])) {
+        header("Location: /SE_Ass_Code/index.php?url=loginOption");
+        exit();
+    }
+    include('header.php'); 
+?>
+
 <div class="container mt-3 d-flex flex-wrap justify-content-center">
     <div class="d-flex justify-content-center col-12 mb-3">
-        <h2>DIỄN ĐÀN BK STUDY SPACE</h2>
+        <a href="/SE_Ass_Code/index.php?url=forum">
+            <h2>DIỄN ĐÀN S3-MRS</h2>
+        </a>
     </div>
 
     <!-- Hiển thị thông báo thành công/thất bại nếu có -->
-    <?php if (isset($_SESSION["error"])): ?>
-        <div class="alert alert-danger text-center m-3" role="alert">
-            <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+    <div class="alert alert-error text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-exclamation-circle"></i>
+            <p class="m-0" id="errorContent"></p>
         </div>
-    <?php endif; ?>
-    <?php if (isset($_SESSION["success"])): ?>
-        <div class="alert alert-success text-center m-3" role="alert">
-            <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+    </div>
+    <div class="alert alert-success text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="successAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-check-circle"></i>
+            <p class="m-0" id="successContent"></p>
         </div>
-    <?php endif; ?>
-    <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-3">
-        <div class="d-grid col-5 col-md-3">
+    </div>
+
+    <!-- Thanh hoạt động -->
+    <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-2">
+        <div class="d-grid col-12 col-md-3">
             <select id="forumTopicFilter" class="form-select">
                 <!-- <option disabled selected>Lựa chọn chủ đề</option> -->
                 <option value="all" selected>Tất cả</option>
@@ -36,7 +50,7 @@
                 <option value="other">Khác</option>
             </select>
         </div>
-        <div class="d-grid col-5 col-md-3">
+        <div class="d-grid col-12 col-md-3">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addNewPost">
                 Tạo bài viết mới
@@ -85,7 +99,6 @@
                             <div class="col-5 d-grid">
                                 <button type="submit" class="btn btn-main">Gửi</button>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -118,16 +131,16 @@
     ?>
     <!-- Danh sách bài viết -->
     <div class="col-12 my-2" id="postList">
-        <div class="overflow-x-auto">
-            <table class="table table-hover mt-1">
+        <div class="overflow-x-auto col-12">
+            <table class="table table-hover table-bordered mt-1">
                 <thead class="table-dark custom-thead">
                     <tr>
-                        <th style="width: 250px;">Tên bài viết</th>
-                        <th style="width: 180px;">Chủ đề</th>
-                        <th style="width: 150px;">Tác giả</th>
-                        <th style="width: 120px;">Thời gian</th>
-                        <th style="width: 100px;">Trạng thái</th>
-                        <th style="width: 100px;">Phản hồi</th>
+                        <th style="width: 300px;">Tên bài viết</th>
+                        <th style="width: 200px;">Chủ đề</th>
+                        <th style="width: 200px;">Tác giả</th>
+                        <th style="width: 150px;">Thời gian</th>
+                        <th style="width: 150px;">Trạng thái</th>
+                        <th style="width: 150px;">Phản hồi</th>
                         <?php if ($_SESSION["Role"] == "admin"): ?>
                         <th style="width: 10%;">Hành động</th>
                         <?php endif; ?>
@@ -186,35 +199,11 @@
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- Hiển thị thanh phân trang -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <?php if ($page > 1): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="?url=<?= $baseUrl ?>&page=<?= $page - 1 ?>">Trước</a>
-                        </li>
-                    <?php endif; ?>
-
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                            <a class="page-link" href="?url=<?= $baseUrl ?>&page=<?= $i ?>"><?= $i ?></a>
-                        </li>
-                    <?php endfor; ?>
-
-                    <?php if ($page < $totalPages): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="?url=<?= $baseUrl ?>&page=<?= $page + 1 ?>">Tiếp</a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            </nav>
         </div>
+        <!-- Hiển thị thanh phân trang -->
+        <div id="pagination"></div>
     </div>
 </div>
-
-<script>
-    const userRole = "<?php echo $_SESSION['Role']; ?>"; // Lấy quyền từ PHP
-</script>
 
 
 <?php include('footer.php'); ?>

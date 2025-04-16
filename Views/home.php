@@ -31,7 +31,7 @@
 
     <div class="container p-2 fade-in d-flex flex-wrap justify-content-between">
         <!-- Thông báo chung -->
-        <div class="col-12 col-md-7 mb-4">
+        <div class="col-12 <?php echo (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin")) ? "col-md-7" : ""; ?> mb-4">
             <h2>THÔNG BÁO CHUNG</h2>
                 <!-- Dữ liệu mẫu -->
                 <?php 
@@ -94,7 +94,7 @@
                 ?>
 
             <!-- Danh sách thông báo chung -->
-            <div class="col-12 d-flex flex-wrap gap-3">
+            <div class="col-12 d-flex flex-wrap gap-3" id="generalNoteBox">
                  <?php foreach ($notis as $noti): ?>
                 <div class="col-12 border border-2 rounded-3 p-2 fade-in">
                     <!-- Thông tin author -->
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <!-- Nội dung -->
-                    <div class="col-12 ms-3 ps-5 mt-2">
+                    <div class="col-11 col-md-12 ms-3 ps-5 mt-2">
                         <h4> <?= $noti["title"];?> </h4>
                         
                         <!-- Nội dung đầy đủ (ẩn ban đầu) -->
@@ -134,12 +134,14 @@
                         </div>
 
                         <!-- Nút Xem chi tiết / Thu gọn -->
-                        <button class="btn btn-link p-0 mt-2" data-bs-toggle="collapse" 
-                                data-bs-target="#noti-full-<?= $noti['id']; ?>"
-                                aria-expanded="false"
-                                aria-controls="noti-full-<?= $noti['id']; ?>">
-                            Xem chi tiết
-                        </button>
+                        <div class="col-11 d-flex justify-content-end mx-2">
+                            <button class="btn btn-custom m-0 px-3 py-0" data-bs-toggle="collapse" 
+                                    data-bs-target="#noti-full-<?= $noti['id']; ?>"
+                                    aria-expanded="false"
+                                    aria-controls="noti-full-<?= $noti['id']; ?>">
+                                <i class="bi bi-eye-fill fs-4"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -147,7 +149,7 @@
         </div>
 
         <!-- Báo cáo từ người dùng -->
-        <div class="col-12 col-md-4 border border-2 rounded-4">
+        <div class="<?php echo (isset($_SESSION["Role"]) && ($_SESSION["Role"] == "staff" || $_SESSION["Role"] == "admin")) ? "col-12 col-md-4 border border-2 rounded-4" : "d-none"; ?>">
             <div class="col-12 rounded-top-4 p-2 text-center" style="background-color: #030391;">
                 <h2 class="text-white m-0">BÁO CÁO</h2>
             </div>
@@ -188,7 +190,7 @@
                         
                     ];
                 ?>
-            <div class="col-12 overflow-auto">
+            <div class="col-12 overflow-y-auto">
             <?php foreach ($reports as $noti): ?>
                 <div class="col-12 border border-bottom-2  p-2 fade-in">
                     <!-- Thông tin author -->
@@ -220,7 +222,7 @@
                         </div>
                     </div>
                     <!-- Nội dung -->
-                    <div class="col-12 ms-3 ps-5 mt-2 pe-2 d-flex flex-wrap justify-content-end">
+                    <div class="col-11 ms-3 ps-5 mt-2 pe-2 d-flex flex-wrap justify-content-end">
                         <div><?= htmlspecialchars_decode($noti["content"]);?></div>
                         
                         <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addNewPost">

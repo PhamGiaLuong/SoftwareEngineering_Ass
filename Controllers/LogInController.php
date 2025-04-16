@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
-<?php
+<?php 
+
+// Author: Gia Luong
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -49,7 +49,7 @@ class LogInController {
                 header("Location: /SE_Ass_Code/index.php?url=home"); // Chuyển về trang chủ
                 exit();
             } else {
-                $_SESSION["error"] = "Tên ID hoặc mật khẩu không đúng!";
+                $_SESSION["error"] = "ID hoặc mật khẩu không đúng!";
                 header("Location: /SE_Ass_Code/index.php?url=logIn");
                 exit();
             }

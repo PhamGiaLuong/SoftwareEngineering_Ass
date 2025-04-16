@@ -40,18 +40,11 @@
             <p class="m-0">Bản quyền &copy; 2024 HCMUT. Bảo lưu mọi quyền.</p>
         </div>
     </div>
+    
     <script>
-        // Update active state of Tabs on Navigation bar
-        // const currentUrl = window.location.pathname;
-        // const navLinks = document.querySelectorAll('.nlink');
-        // navLinks.forEach(link => {
-        //     if (link.href === window.location.href) {
-        //         link.classList.add('active');
-        //         link.setAttribute('aria-current', 'page');
-        //     } else {
-        //         link.classList.remove('active');
-        //     }
-        // });
+        const userRole = "<?php echo $_SESSION['Role']; ?>"; // Lấy quyền từ PHP
+        const currentUserID = "<?php echo $_SESSION['userID']; ?>";
+        const currentName = "<?php echo $_SESSION['name']; ?>";
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

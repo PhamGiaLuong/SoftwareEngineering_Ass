@@ -1,7 +1,7 @@
-<!-- 
-    Author: Gia Luong
- -->
 <?php 
+
+// Author: Gia Luong
+
 require_once "./Models/users.php";
 require_once "./Models/notification.php";
 require_once "./Models/mail.php";
@@ -20,7 +20,7 @@ class ManageController {
     public function addNewMember() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $userModel = new Users();
-            $newUser = $userModel->addNewMember($_POST["name"], $_POST["role"], $_POST["image"], $_POST["email"], $_POST["faculty"]);
+            $newUser = $userModel->addNewMember($_POST["name"], $_POST["role"], $_POST["email"], $_POST["faculty"]);
             if (isset($newUser)) {
                 $mailer = new Mailer();
                 // Tạo token ngẫu nhiên
@@ -76,7 +76,7 @@ class ManageController {
     }
 
     // Chức năng: gọi Models/users.php đổi trạng thái tài khoản người dùng
-    public function changeStatus($userID, $updateStatus, $reason, $time) {
+    public function changeUserStatus($userID, $updateStatus, $reason, $time) {
         $userModel = new Users();
         $changeFlag = $userModel->changeStatus($userID, $updateStatus);
 
