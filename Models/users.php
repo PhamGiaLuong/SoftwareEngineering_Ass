@@ -7,31 +7,31 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 class Users {
     private $NumOfMember = [
-        "staff" => 4,
-        "admin" => 4
+        "staff" => 5,
+        "admin" => 5
     ];
      
     private $Staffs = [
         ["id" => "250000", "password" => "admin0", "role" => "admin", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
-            "name" => "Vu Thích", "email" => "thich.vu@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
+            "name" => "Vu Thích", "email" => "thich.vu@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin", "date" => "06/01/2025"],
         ["id" => "250001", "password" => "admin1", "role" => "admin", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
-            "name" => "Thế Hưng A", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
+            "name" => "Thế Hưng A", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin", "date" => "01/02/2025"],
         ["id" => "250002", "password" => "admin2", "role" => "admin", "image" => "/SE_Ass_Code/Images/a6.png",  "status" => "Đang hoạt động",
-            "name" => "Hải Dương A", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
+            "name" => "Hải Dương A", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"],
         ["id" => "250003", "password" => "admin3", "role" => "admin", "image" => "/SE_Ass_Code/Images/a5.png", "status" => "Đang hoạt động",
-            "name" => "Tuấn Lâm A", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin"],
+            "name" => "Tuấn Lâm A", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Trung tâm Dữ liệu và Công nghệ thông tin", "date" => "01/02/2025"],
         ["id" => "250004", "password" => "admin4", "role" => "admin", "image" => "/SE_Ass_Code/Images/a3.png", "status" => "Đang hoạt động",
-            "name" => "Gia Lương A", "email" => "pham15032004@gmail.com", "faculty" => "Phòng Quản trị thiết bị"],
-        ["id" => "251100", "password" => "staff0", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
-            "name" => "Đặng Vi", "email" => "vi.dang@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
-        ["id" => "251101", "password" => "staff1", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
-            "name" => "Thế Hưng B", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
-        ["id" => "251102", "password" => "staff2", "role" => "staff", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
-            "name" => "Hải Dương B", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
-        ["id" => "251103", "password" => "staff3", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
-            "name" => "Tuấn Lâm B", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị"],
-        ["id" => "251104", "password" => "staff4", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
-            "name" => "Gia Lương B", "email" => "pham15032004@gmail.com", "faculty" => "Phòng Quản trị thiết bị"]
+            "name" => "Gia Lương A", "email" => "pham15032004@gmail.com", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"],
+        ["id" => "251000", "password" => "staff0", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
+            "name" => "Đặng Vi", "email" => "vi.dang@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị", "date" => "06/01/2025"],
+        ["id" => "251001", "password" => "staff1", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
+            "name" => "Thế Hưng B", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"],
+        ["id" => "251002", "password" => "staff2", "role" => "staff", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
+            "name" => "Hải Dương B", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"],
+        ["id" => "251003", "password" => "staff3", "role" => "staff", "image" => "/SE_Ass_Code/Images/a2.png", "status" => "Đang hoạt động",
+            "name" => "Tuấn Lâm B", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"],
+        ["id" => "251004", "password" => "staff4", "role" => "staff", "image" => "/SE_Ass_Code/Images/a4.png", "status" => "Đang hoạt động",
+            "name" => "Gia Lương B", "email" => "pham15032004@gmail.com", "faculty" => "Phòng Quản trị thiết bị", "date" => "01/02/2025"]
     ];
 
     private $HCMUTs = [
@@ -39,7 +39,7 @@ class Users {
             "name" => "Nguyễn Hữu Hải Dương", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2211816", "password" => "Lam", "role" => "student", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
             "name" => "Nguyễn Quốc Tuấn Lâm", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
-        ["BKNetID" => "2211960", "password" => "Luong", "role" => "student", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
+        ["BKNetID" => "2211960", "password" => "Luong", "role" => "student", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Ngưng hoạt động",
             "name" => "Phạm Gia Lương", "email" => "luong.pham2211960@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2053079", "password" => "Hung", "role" => "student", "image" => "/SE_Ass_Code/Images/a3.png", "status" => "Đang hoạt động",
             "name" => "Sẻ Thế Hưng", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
@@ -92,6 +92,7 @@ class Users {
                 "status" => $user["status"],
                 "email" => $user["email"],
                 "faculty" => $user["faculty"],
+                "date" => $user["date"]
             ];
             $StaffsList[] = $staff;
         }
@@ -100,20 +101,29 @@ class Users {
 
     // Chức năng: thêm Staff/Admin
     public function addNewMember($name, $role, $email, $faculty) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $userID = $this->NumOfMember[$role];
+        if ($role == "staff") {
+            $userID += 251000;
+        } else if ($role == "admin") {
+            $userID += 250000;
+        }
         $user = [
-            "id" => $this->NumOfMember[$role] + 1,
+            "id" => $userID,
             "password" => "01042025",
             "role" => $role,
             "image" => "/SE_Ass_Code/Images/a1.png",
             "status" => "Đang hoạt động",
             "name" => $name,
             "email" => $email,
-            "faculty" => $faculty
+            "faculty" => $faculty,
+            "date" => date("d/m/Y")
         ];
         $this->Staffs[] = $user;
         
         $_SESSION["Staffs"] = $this->Staffs;
-        $_SESSION["NumOfMember"] = $this->NumOfMember + 1;
+        $this->NumOfMember[$role]++;
+        $_SESSION["NumOfMember"] = $this->NumOfMember;
         return $user;
     }
 
@@ -190,9 +200,9 @@ class Users {
     // Chức năng: đổi trạng thái tài khoản người dùng
     public function changeStatus($userID, $updateStatus) {
         $status = [
-            "active" =>"Đang hoạt động",
+            "unlock" =>"Đang hoạt động",
             "warning" => "Cảnh cáo",
-            "inactive" => "Ngưng hoạt động",
+            "lock" => "Ngưng hoạt động",
             "other" => "Khác",
         ];
         $updateStatus = $status[$updateStatus];
@@ -206,6 +216,9 @@ class Users {
         }
         if (!isset($user)) {
             foreach ($this->Staffs as &$user) {
+                if ($user["id"] === $userID && $user["role"] === "admin") {
+                    return false;
+                }
                 if ($user["id"] === $userID && $user["role"] !== "admin") {
                     break;
                 }

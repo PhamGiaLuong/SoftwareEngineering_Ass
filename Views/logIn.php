@@ -48,14 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 alt="logo" class="img-fluid">
                         </div>
                         <h2 class="text-center col-12 mt-3" style="color: white;">
-                            HỆ THỐNG XÁC THỰC
-                            <?php 
-                                echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "TẬP TRUNG" : "";
-                            ?>
-                        <br>
-                            <?php 
-                                echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "HCMUT_SSO" :  "BK STUDY SPACE";
-                            ?>
+                            HỆ THỐNG XÁC THỰC TẬP TRUNG HCMUT_SSO
                         </h2>
                     </div>
                     <div class="col-md-6 col-12 rounded-5 pt-md-4">
@@ -64,14 +57,12 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="alert alert-danger text-center m-3 d-flex align-items-center gap-3" role="alert">
                                 <i class="bi bi-exclamation-circle"></i>
                                 <p class="m-0"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
-                                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
                             </div>
                         <?php endif; ?>
                         <?php if (isset($_SESSION["success"])): ?>
                             <div class="alert alert-success text-center m-3 d-flex align-items-center gap-3" role="alert">
                                 <i class="bi bi-check-circle"></i>
                                 <p class="m-0"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
-                                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
                             </div>
                         <?php endif; ?>
                         <form action="/SE_Ass_Code/index.php?url=logIn/authenticate" method="POST" class="mt-md-5 m-3">

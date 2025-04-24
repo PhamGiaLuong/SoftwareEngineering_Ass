@@ -16,6 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <meta name="author" content="PhamGiaLuong">
         <meta name="copyright" content="CSE HCMUT 2024">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="/SE_Ass_Code/Images/S3MRS_logo.png"> <!-- Favicon -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap framework -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> <!--icon bootstrap-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"> <!--icon google-->
@@ -35,6 +36,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                 tinycomments_mode: 'embedded',
                 tinycomments_author: 'Author name',
+                // inline: true,
                 ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                 setup: function (editor) {
                     editor.on('change', function () {
@@ -51,11 +53,14 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="col-3 py-2">
                     <a class="col-12 d-flex navbar-brand" href="/SE_Ass_Code/index.php?url=home">
                         <div> 
-                            <img src="/SE_Ass_Code/Images/logoVienTrang.png" alt="Logo" width="50px">
+                            <img src="/SE_Ass_Code/Images/S3MRS_logo.png" alt="Logo" class="rounded-3" width="50px">
                         </div>
-                        <div class="col-11 d-flex flex-wrap fs-6 text-white">
+                        <div class="col-11 d-none d-sm-flex flex-wrap fs-6 text-white">
                             <div class="col-12 ps-2">HỆ THỐNG QUẢN LÝ VÀ ĐẶT CHỖ</div>
                             <div class="col-12 ps-2">KHÔNG GIAN TỰ HỌC THÔNG MINH</div>
+                        </div>
+                        <div class="col-11 d-sm-none d-flex flex-wrap fs-3 text-white align-items-center">
+                            <div class="col-12 ps-2">S3-MRS</div>
                         </div>
                     </a>
                 </div>

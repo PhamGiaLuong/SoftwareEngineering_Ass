@@ -18,7 +18,7 @@
     </div>
 
     <!-- Hiển thị thông báo thành công/thất bại nếu có -->
-    <div class="alert alert-error text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
+    <div class="alert alert-danger text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
         <div class="col-11 d-flex align-items-center gap-3">
             <i class="bi bi-exclamation-circle"></i>
             <p class="m-0" id="errorContent"></p>
@@ -110,25 +110,6 @@
         </div>
     </div>
 
-    <?php 
-        $postsPerPage = 10; // Số bài viết trên mỗi trang
-        $totalPages = ceil(count($posts) / $postsPerPage);
-        // Xác định trang hiện tại
-        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-        $page = max(1, min($page, $totalPages)); // Đảm bảo giá trị trang hợp lệ
-
-        // Đảo ngược thứ tự bài viết để lấy từ dưới lên
-        $reversedPosts = array_reverse($posts);
-
-        // Xác định vị trí bắt đầu lấy dữ liệu
-        $offset = ($page - 1) * $postsPerPage;
-
-        // Lấy danh sách bài viết của trang hiện tại từ dưới lên
-        $postsToShow = array_slice($reversedPosts, $offset, $postsPerPage);
-
-        // Lấy URL gốc
-        $baseUrl = isset($_GET['url']) ? $_GET['url'] : 'forum/list'; // Mặc định là danh sách forum
-    ?>
     <!-- Danh sách bài viết -->
     <div class="col-12 my-2" id="postList">
         <div class="overflow-x-auto col-12">
@@ -147,56 +128,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($postsToShow as $post): ?>
-                    <tr>
-                        <td class="truncate-1"> <a href="/SE_Ass_Code/index.php?url=forum/detail/<?= $post['id']; ?>"> <?= $post['title']; ?> </a></td>
-                        <td> <?= $post['topic']; ?></td>
-                        <td> <?= $post['author']["name"]; ?></td>
-                        <td> <?= $post['time']; ?></td>
-                        <td> <?= $post['status']; ?></td>
-                        <td onclick="toggleReplie(<?= $post['id']; ?>)" style="color: #030391;"> 
-                            <?= count($post['replies']); ?> phản hồi
-                        </td>
-                        <?php if ($_SESSION["Role"] == "admin"): ?>
-                        <td> 
-                            <!-- <button type="submit" class="btn btn-main m-2" onclick="window.location.href='/SE_Ass_Code/index.php?url=forum/detail/<?= $post['id']; ?>'">
-                                <i class="bi fs-5 bi-eye-fill"></i> Xem
-                            </button> -->
-                            <?php if ($post["status"] == "Đang mở"): ?>
-                            <button type="submit" class="btn btn-main" onclick="window.location.href='/SE_Ass_Code/index.php?url=forum/lockPost/<?= $post['id']; ?>'">
-                                <i class="bi fs-5 bi-lock-fill"></i> Khóa
-                            </button>
-                            <?php else: ?>
-                            <button type="submit" class="btn btn-main" onclick="window.location.href='/SE_Ass_Code/index.php?url=forum/unlockPost/<?= $post['id']; ?>'">
-                                <i class="bi fs-5 bi-unlock-fill"></i> Mở
-                            </button>
-                            <?php endif; ?>
-                        </td>
-                        <?php endif; ?>
-                    </tr>
-                    <tr id="details-<?= $post['id']; ?>" class="collapse">
-                        <td colspan="6">
-                            <table class="table mb-0">
-                                <thead class="table-secondary">
-                                    <tr>
-                                        <th>Tác giả</th>
-                                        <th>Thời gian</th>
-                                        <th>Trạng thái</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($post['replies'] as $reply): ?>
-                                        <tr>
-                                            <td><?= $reply['author']; ?></td>
-                                            <td><?= $reply['time']; ?></td>
-                                            <!-- <td><?= $item['status']; ?></td> -->
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -206,4 +137,7 @@
 </div>
 
 
+    <!-- Hiển thị thông báo động cho người dùng -->
+    <div id="toastBox" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    </div>
 <?php include('footer.php'); ?>
