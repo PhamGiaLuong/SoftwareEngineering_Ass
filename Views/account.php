@@ -85,4 +85,8 @@
     <?php endif; ?>
 </div>
 
+    <!-- Hiển thị thông báo động cho người dùng -->
+    <div id="toastBox" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    </div>
+
 <?php include('footer.php'); ?>

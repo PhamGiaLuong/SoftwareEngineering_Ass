@@ -9,20 +9,20 @@ require_once "./Models/rooms.php";
 class HistoryController {
     // Chức năng: hiển thị tab Lịch sử đặt phòng
     public function index(){
-        $bookingModel = new Bookings();
-        $bookingList = $bookingModel->getAllBookings();
-        $userModel = new Users();
-        $roomModel = new Rooms();
-        foreach($bookingList as &$booking) {
-            $auth = $userModel->getUserByID($booking["user_id"]);
-            $author = [
-                "name" => $auth["name"],
-                "image" => $auth["image"],
-                "role" => $auth["role"]
-            ];
-            $booking["author"] = $author;
-            $booking["room"] = $roomModel->GetRoomByID($booking["room_id"]);
-        }
+        // $bookingModel = new Bookings();
+        // $bookingList = $bookingModel->getAllBookings();
+        // $userModel = new Users();
+        // $roomModel = new Rooms();
+        // foreach($bookingList as &$booking) {
+        //     $auth = $userModel->getUserByID($booking["user_id"]);
+        //     $author = [
+        //         "name" => $auth["name"],
+        //         "image" => $auth["image"],
+        //         "role" => $auth["role"]
+        //     ];
+        //     $booking["author"] = $author;
+        //     $booking["room"] = $roomModel->GetRoomByID($booking["room_id"]);
+        // }
         require_once('./Views/history.php');
     }
 
@@ -43,6 +43,24 @@ class HistoryController {
                 "role" => $auth["role"]
             ];
             $booking["author"] = $author;
+            if ($booking["report"] != null) {
+                foreach ($booking["report"] as &$rpt) {
+                    if ($rpt["solver_id"] != "---") {
+                        $solver = $userModel->getUserByID($rpt["solver_id"]);
+                        $rpt["solver"] = [
+                            "name" => $solver["name"],
+                            "image" => $solver["image"],
+                            "role" => $solver["role"]
+                        ];
+                    } else {
+                        $rpt["solver"] = [
+                            "name" => "---",
+                            "image" => "---",
+                            "role" => "---"
+                        ];
+                    }
+                }
+            } 
             $booking["room"] = $roomModel->GetRoomByID($booking["room_id"]);
         }
 

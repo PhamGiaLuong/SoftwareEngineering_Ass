@@ -1,84 +1,13 @@
+<!-- 
+    Author: Gia Luong
+ -->
 <?php 
-include('header.php'); 
-
-// Giả lập dữ liệu lịch sử đặt chỗ
-$reservation_history = [
-    [
-        'id' => '1123',
-        'date' => '29/3/2025',
-        'name' => 'Phòng học nhóm số 1',
-        'address' => 'H1-401',
-        'start_time' => '08:00',
-        'end_time' => '10:00',
-        'status' => 'Hoàn tất',
-        'report' => [ 
-            [
-                'date' => "29/3/2025 9:30",
-                'content' => 'á bê cê',
-                'status' => 'Đã xử lý'
-            ],
-            [
-                'date' => "29/3/2025 9:45",
-                'content' => 'đố rê min',
-                'status' => 'Đã xử lý'
-            ]       
-        ]
-    ],
-    [
-        'id' => '1153',
-        'date' => '31/3/2025',
-        'name' => 'Phòng tự học số 1',
-        'address' => 'H1-113',
-        'start_time' => '09:00',
-        'end_time' => '11:00',
-        'status' => 'Đã hủy',
-        'report' => [
-        ]
-    ],
-    [
-        'id' => '1204',
-        'date' => '1/4/2025',
-        'name' => 'Phòng tự học số 2',
-        'address' => 'H6-115',
-        'start_time' => '13:00',
-        'end_time' => '15:00',
-        'status' => 'Hoàn tất',
-        'report' => [
-            [
-                'date' => "1/4/2025 13:30",
-                'content' => 'á bê cê',
-                'status' => 'Đã xử lý'
-            ]
-        ]
-    ],
-    [
-        'id' => '1268',
-        'date' => '3/4/2025',
-        'name' => 'Phòng tự học số 2',
-        'address' => 'H6-115',
-        'start_time' => '10:00',
-        'end_time' => '14:00',
-        'status' => 'Hoàn tất',
-        'report' => [
-        ]
-    ],
-    [
-        'id' => '1312',
-        'date' => '5/4/2025',
-        'name' => 'Phòng tự học số 1',
-        'address' => 'H1-113',
-        'start_time' => '13:00',
-        'end_time' => '15:00',
-        'status' => 'Hoàn tất',
-        'report' => [
-            [
-                'date' => "1/4/2025 13:30",
-                'content' => 'á bê cê',
-                'status' => 'Chưa xử lý'
-            ]
-        ]
-    ]
-];
+    // Điều hướng đến tab đăng nhập nếu chưa
+    if (!isset($_SESSION["Role"])) {
+        header("Location: /SE_Ass_Code/index.php?url=loginOption");
+        exit();
+    }
+    include('header.php'); 
 ?>
 
 <div class="container mt-3 d-flex flex-wrap justify-content-center">
@@ -166,5 +95,8 @@ $reservation_history = [
     <div id="pagination"></div>
 </div>
 
+    <!-- Hiển thị thông báo động cho người dùng -->
+    <div id="toastBox" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    </div>
 
 <?php include('footer.php'); ?>

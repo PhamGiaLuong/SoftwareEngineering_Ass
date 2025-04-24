@@ -38,13 +38,13 @@ class Notifications {
         
     ];
 
-    private $GeneralNotification = [
+    private $Announcements = [
         [
             "id" => "1",
             "title" => "Thông báo tạm dừng hoạt động, sửa chữa khu tự học H2",
-            "type" => "repair",
+            "type" => "Dừng hoạt động",
             "author" => "250003",
-            "pin" => false,
+            "pin" => "none-pin",
             "content" => "
                         <p>🔹 Quản trị viên xin thông báo về sự thay đổi thời gian hoạt động của khu tự học tại tòa H2:</p>
                         <ul>
@@ -60,9 +60,9 @@ class Notifications {
         [
             "id" => "2",
             "title" => "🎉 Vòng quay may mắn dành cho sinh viên đặt chỗ ngày 20/3!",
-            "type" => "event",
+            "type" => "Sự kiện",
             "author" => "250002",
-            "pin" => false,
+            "pin" => "none-pin",
             "content" => "
                 <p>🎁 Một cơ hội hấp dẫn đến từ doanh nghiệp đồng hành cùng khu tự học!</p>
                 <p>🔹 Vào ngày <strong>20/3/2025</strong>, tất cả sinh viên <strong>có đặt chỗ hợp lệ</strong> sẽ được tham gia <strong>vòng quay may mắn</strong> với nhiều phần quà thú vị:</p>
@@ -82,9 +82,9 @@ class Notifications {
         [
             "id" => "3",
             "title" => "📢 Tạm dừng khu tự học tầng 3 tòa H6 sáng ngày 27/3 để tổ chức phỏng vấn, tư vấn CV",
-            "type" => "event",
+            "type" => "Dừng hoạt động",
             "author" => "250002",
-            "pin" => true,
+            "pin" => "pin",
             "content" => "
                 <p>🔹 Quản trị viên xin thông báo về việc <strong>tạm dừng hoạt động khu tự học tầng 3 tòa H6</strong> vào buổi sáng ngày <strong>27/3/2025</strong> để tổ chức sự kiện:</p>
                 <ul>
@@ -102,9 +102,9 @@ class Notifications {
         [
             "id" => "4",
             "title" => "😄 [Thông báo khẩn] Tòa H1 sẽ được thay bằng tàu không gian!",
-            "type" => "fun",
+            "type" => "Khác",
             "author" => "250001",
-            "pin" => false,
+            "pin" => "none-pin",
             "content" => "
                 <p>🚀 Theo thông báo mới nhận từ Bộ phận Không gian & Giải trí HCMUT, <strong>tòa nhà H1</strong> sẽ được thay thế bằng một <strong>tàu không gian đa năng</strong> nhằm phục vụ nhu cầu học tập trong môi trường không trọng lực.</p>
                 <p>👨‍🚀 Sinh viên tham gia lớp học tại tòa H1 vui lòng chuẩn bị:</p>
@@ -123,9 +123,9 @@ class Notifications {
         [
             "id" => "5",
             "title" => "📚 Hội sách sinh viên tại khu tự học tầng 1 – tòa H1!",
-            "type" => "event",
+            "type" => "Sự kiện",
             "author" => "250002",
-            "pin" => false,
+            "pin" => "none-pin",
             "content" => "
                 <p>📢 Kính mời các bạn sinh viên đến tham gia <strong>Hội sách sinh viên</strong> được tổ chức tại <strong>khu tự học tầng 1, tòa H1</strong>.</p>
                 <ul>
@@ -143,9 +143,9 @@ class Notifications {
         [
             "id" => "6",
             "title" => "Thông báo lịch nghỉ 30/4 và 1/5 năm 2025",
-            "type" => "close",
+            "type" => "Thông báo nghỉ lễ",
             "author" => "250004",
-            "pin" => true,
+            "pin" => "pin",
             "content" => "
                         <p>🔹 Quản trị viên xin thông báo về Lịch nghỉ lễ 30/4 Giải phóng miền Nam thống nhất đất nước và Quốc tế Lao động 1/5:</p>
                         <ul>
@@ -208,8 +208,8 @@ class Notifications {
         if (isset($_SESSION["Notification"])) {
             $this->NotificationList = $_SESSION["Notification"];
         }
-        if (isset($_SESSION["GenNote"])) {
-            $this->GeneralNotification = $_SESSION["GenNote"];
+        if (isset($_SESSION["Announcements"])) {
+            $this->Announcements = $_SESSION["Announcements"];
         }
     }
 
@@ -325,43 +325,42 @@ class Notifications {
     }
 
 
-    // GeneralNotification
-    public function AddGenNotification (string $title, string $type, string $author, string $content) {
-        $id = count($this->GeneralNotification);
+    // Announcements
+    public function AddAnnouncement (string $title, string $type, string $author, string $content, string $pin = "none-pin") {
+        $id = count($this->Announcements) + 1;
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $newNoti = [
-            "id" => $id + 1,
+        $newAnn = [
+            "id" => $id,
             "type" => $type,
             "title" => $title,
             "content" => $content,
             "author" => $author,
-            "pin" => false,
-            "is_read" => false,
-            "edit_at" => null,
+            "pin" => $pin,
+            "edit_at" => false,
             "created_at" =>  date("d/m/Y H:i")
         ];
-        $this->GeneralNotification[] = $newNoti;
-        $_SESSION["GenNote"] =$this->GeneralNotification;
+        $this->Announcements[] = $newAnn;
+        $_SESSION["Announcements"] =$this->Announcements;
         return true;
     }
 
-    public function GetAllGenNotification () {
-        return $this->GeneralNotification;
+    public function GetAllAnnouncements () {
+        return $this->Announcements;
     }
 
-    public function GetNearestGenNotification () {
-        $reversed = array_reverse($this->GeneralNotification);
+    public function GetNearestAnnouncements () {
+        $reversed = array_reverse($this->Announcements);
         $reversed = array_slice($reversed, 0, 5);
         $firstNearest = [];
         foreach ($reversed as $note) {
-            if ($note["pin"] == false)
+            if ($note["pin"] == "none-pin")
                 $firstNearest[] = $note;
         }
         return $firstNearest;
     }
 
-    public function GetGenNotificationByID (string $noteID) {
-        foreach ($this->GeneralNotification as $note) {
+    public function GetAnnouncementByID (string $noteID) {
+        foreach ($this->Announcements as $note) {
             if ($note["id"] == $noteID) {
                 return $note;
             }
@@ -369,10 +368,10 @@ class Notifications {
         return false;
     }
 
-    public function GetPinGenNotification () {
+    public function GetPinAnnouncements () {
         $pinnedList = [];
-        foreach ($this->GeneralNotification as $note) {
-            if ($note["pin"] == true) {
+        foreach ($this->Announcements as $note) {
+            if ($note["pin"] == "pin") {
                 $pinnedList[] = $note;
             }
         }
@@ -380,36 +379,38 @@ class Notifications {
         return $pinnedList;
     }
 
-    public function EditGenNotificationByID (string $noteID, string $title, string $type, string $content) {
-        foreach ($this->GeneralNotification as &$note) {
-            if ($note["id"] == $noteID) {
+    public function editAnnouncementByID (string $annID, string $title, string $type, string $editor, string $content, string $pin) {
+        foreach ($this->Announcements as &$note) {
+            if ($note["id"] == $annID) {
                 date_default_timezone_set("Asia/Ho_Chi_Minh");
                 $note["title"] = $title;
                 $note["type"] = $type;
                 $note["content"] = $content;
                 $note["edit_at"] = date("d/m/Y H:i");
-                $_SESSION["GenNote"] =$this->GeneralNotification;
+                $note["editor"] = $editor;
+                $note["pin"] = $pin;
+                $_SESSION["Announcements"] =$this->Announcements;
                 return true;
             }
         }
         return false;
     }
 
-    public function PinGenNotificationByID (string $noteID) {
-        foreach ($this->GeneralNotification as &$note) {
+    public function PinAnnouncementByID (string $noteID) {
+        foreach ($this->Announcements as &$note) {
             if ($note["id"] == $noteID) {
                 $note["pin"] = true;
-                $_SESSION["GenNote"] =$this->GeneralNotification;
+                $_SESSION["Announcements"] =$this->Announcements;
                 return true;
             }
         }
         return false;
     }
-    public function UnpinGenNotificationByID (string $noteID) {
-        foreach ($this->GeneralNotification as &$note) {
+    public function UnpinAnnouncementsByID (string $noteID) {
+        foreach ($this->Announcements as &$note) {
             if ($note["id"] == $noteID) {
                 $note["pin"] = false;
-                $_SESSION["GenNote"] =$this->GeneralNotification;
+                $_SESSION["Announcements"] =$this->Announcements;
                 return true;
             }
         }

@@ -23,6 +23,10 @@ a {
     color: #030391;
 }
 
+p {
+    margin: 0;
+}
+
 /* Nút nhấn */
 .btn-main {
     background-color: #222f3e;
@@ -137,7 +141,7 @@ a {
     padding: 5px 0;
     font-size: 16px;
     color: #222f3e;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid #222f3e;
     outline: none;
@@ -301,14 +305,17 @@ a {
 .room-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px 60px;
-    justify-content: center;
+    gap: 40px 40px;
+    justify-content: center;border: 1px dashed gray;
 }
 
 .room-card {
+    width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 150px;
 }
 
 .room-item {
@@ -320,8 +327,8 @@ a {
 }
 
 .room-image-wrapper {
-    width: 220px;
-    height: 160px;
+    width: 30%;
+    height: 100%;
     flex-shrink: 0;
 }
 
@@ -335,13 +342,11 @@ a {
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-sbetween;
     flex: 1;
 }
 
 .room-desc {
-    font-size: 15px;
-    color: #000;
     line-height: 1.4;
 }
 
@@ -350,19 +355,19 @@ a {
     color: white;
     padding: 8px 18px;
     border-radius: 12px;
-    font-size: 16px;
+    /* font-size: 16px; */
     text-decoration: none;
     margin-top: 12px;
-    font-weight: 600;
+    /* font-weight: 600; */
     width: fit-content;
 }
 
 .room-name {
     text-align: center;
     margin-top: 10px;
-    font-size: 18px;
     font-weight: bold;
-    color: #000080;
+    font-size: large;
+    color: #030393;
 }
 
 .report-wrapper {
@@ -376,9 +381,9 @@ a {
     color: white;
     padding: 6px 16px;
     border-radius: 8px;
-    font-size: 14px;
+    /* font-size: 14px; */
     text-decoration: none;
-    font-weight: 500;
+    /* font-weight: 500; */
     cursor: pointer;
 }
 

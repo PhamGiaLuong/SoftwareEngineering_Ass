@@ -18,7 +18,7 @@
     </div>
 
     <!-- Hiển thị thông báo thành công/thất bại nếu có -->
-    <div class="alert alert-error text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
+    <div class="alert alert-danger text-center m-3 d-flex align-items-center d-none col-12 col-md-6" role="alert" id="errorAlert">
         <div class="col-11 d-flex align-items-center gap-3">
             <i class="bi bi-exclamation-circle"></i>
             <p class="m-0" id="errorContent"></p>
@@ -206,4 +206,7 @@
 </div>
 
 
+    <!-- Hiển thị thông báo động cho người dùng -->
+    <div id="toastBox" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    </div>
 <?php include('footer.php'); ?>

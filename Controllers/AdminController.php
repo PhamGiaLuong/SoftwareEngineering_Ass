@@ -11,41 +11,6 @@ class AdminController {
         require_once('./Views/admin.php');
     }
 
-    // Chức năng: sắp xếp mảng theo trường
-    public function sortArrayByField(array $data, string $field, string $order = 'asc'): array {
-        usort($data, function ($a, $b) use ($field, $order) {
-            if (!isset($a[$field]) || !isset($b[$field])) {
-                return 0; // Nếu không tồn tại trường, giữ nguyên vị trí
-            }
-            $result = strcmp($a[$field], $b[$field]);
-            return $order === 'asc' ? $result : -$result;
-        });
-        return $data;
-    }
-
-    // Chức năng: trích xuất danh sách Staff/Admin
-    public function getUsers($page) {
-        $userModel = new Users();
-        $userList = $userModel->getStaffsList();
-        // Sắp xếp danh sách theo tên
-        $userList = $this->sortArrayByField($userList, "name", "asc");
-
-        // Phân trang dữ liệu
-        $offset = ($page - 1) * 10;
-        $paginatedList = array_slice($userList, $offset, 10);
-
-        // Trả về chuỗi json
-        header('Content-Type: application/json');
-        echo count($paginatedList) > 0 
-            ? json_encode([
-                'userList' => $paginatedList,
-                'totalPages' => ceil(count($userList) / 10)
-            ]) 
-            : json_encode(["info" => "Không tìm thấy dữ liệu người dùng"]);
-        // echo $result;
-        exit;
-    }
-
     // Chức năng: trích xuất danh sách các phòng của khu tự học
     public function getStudySpace($roomType, $page) {
         $roomModel = new Rooms();

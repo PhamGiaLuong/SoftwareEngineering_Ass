@@ -5,6 +5,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once "./Models/bookings.php";
 
 class Rooms {
     private $Room_Self_Study = [
@@ -143,6 +144,34 @@ class Rooms {
     }
     public function GetAvailableRoomList($type) {
         $rooms = $this->GetRoomList($type);
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $today = date("d/m/Y");
+        $now = date("H:i");
+
+        $bookingModel = new Bookings();
+        $bookingList = $bookingModel->getBookingsByDate($today);
+
+        foreach ($bookingList as $booking)
+            foreach ($rooms as &$room) {
+                if ($booking["room_id"] != $room["id"]) continue;
+                if ($booking["time_start"] < $now && $booking["time_end"] > $now) {
+                    if ($booking["room_id"] < 200) {
+                        $room["seats"][$booking["seat_number"]]["status"] = "using";
+                    } else $room["status"] = "using";
+                } else {
+                    if ($booking["room_id"] < 200) {
+                        $room["seats"][$booking["seat_number"]]["status"] = "available";
+                    } else $room["status"] = "available";
+                }
+            }
+        if ($type == "self_study") {
+            $_SESSION["selfRoom"] = $rooms;
+            return $rooms;
+        }
+        else if ($type == "dual") $_SESSION["dualRoom"] = $rooms;
+        else if ($type == "group") $_SESSION["groupRoom"] = $rooms;
+
         return array_filter($rooms, function($room) {
             return $room['status'] === "available";
         });
@@ -154,6 +183,7 @@ class Rooms {
                     $result = [
                         "address" => $room["address"],
                         "name" => $room["name"],
+                        "id" => $room["id"],
                     ];
                     return $result;
                 }
