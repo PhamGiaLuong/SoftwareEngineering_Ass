@@ -831,6 +831,7 @@ function getAvailableSeat() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                userID: currentUserID,
                 room_id: roomID,
                 start_time: startTime,
                 end_time: endTime,
@@ -887,6 +888,7 @@ function getAvailableRoom() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                userID: currentUserID,
                 room_id: roomID,
                 start_time: startTime,
                 end_time: endTime,
@@ -906,6 +908,12 @@ function getAvailableRoom() {
                 status.classList.add('bg-danger-subtle');
                 status.classList.remove('bg-success-subtle');
                 submitBtn.disabled = true;
+            } else if (data.status == "locked") {
+                status.value = "Tài khoản của bạn đã bị khóa, vui lòng liên hệ với quản trị viên để biết thêm thông tin!";
+                status.classList.remove('bg-info-subtle');
+                status.classList.add('bg-danger-subtle');
+                status.classList.remove('bg-success-subtle');
+                submitBtn.disabled = false;
             } else {
                 status.value = "Không xác định được!";
             }
@@ -1253,6 +1261,7 @@ function changePostStatus(action, postID) {
             }
             if (data.success) {
                 showAlertMessage(data.success, "success");
+                fetchPosts("all");
             }
         })
         .catch(error => {
@@ -1746,7 +1755,7 @@ function loadReports(page = 1) {
                 row.innerHTML = `
                     <td>${rpt.booking_id}-${rpt.report_id}</td>
                     <td class="text-start">${rpt.author.name}</td>
-                    <td class="text-start">${rpt.content}</td>
+                    <div class="text-start">${rpt.content}</div>
                     <td>${rpt.created_at}</td>
                     <td>${rpt.status}</td>
                     <td>${rpt.solver.name} - ${rpt.solved_at}</td>

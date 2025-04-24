@@ -57,7 +57,14 @@
 
             <!-- Thống kê -->
             <div class="col-12 d-flex flex-wrap justify-content-between gap-3 my-2">
-                
+                <div class="col-md-5 col-lg-3 col-12 border border-2 rounded-3 p-2 d-flex flex-wrap bg-opacity-25">
+                    <div class="col-4 bg-secondary d-flex flex-wrap gap-1 justify-content-center align-items-center text-white">
+                        <i class="bi bi-clipboard-data fs-3"></i>
+                    </div>
+                    <div class="col-8 px-2 d-flex flex-wrap align-items-center">
+                        <div class="col-12"><strong>THỐNG KÊ SỬ DỤNG PHÒNG TRONG HÔM NAY</strong></div>
+                    </div>
+                </div>
                 <div class="col-md-5 col-lg-3 col-12 border rounded-3 p-2 d-flex flex-wrap bg-success bg-opacity-25">
                     <div class="col-4 bg-success d-flex flex-wrap gap-1 justify-content-center align-items-center text-white">
                         <i class="bi bi-calendar-check fs-3"></i><strong class="col-12 text-center">Hoàn thành</strong>
@@ -202,6 +209,11 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewReportModal" id="view-button" disabled>Xem</button>
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateStatusModal" id="update-button" disabled>Cập nhật</button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" id="delete-button">Xóa</button>
+            </div>
+            <div class="col-12 d-flex gap-2 justify-content-end align-items-center mb-2">
+                <div class="p-2 border rounded-3 text-center">
+                    <strong><?= $_SESSION["userID"]?> - <?= $_SESSION["name"]?></strong>
+                </div>
             </div>
 
             <!-- Bảng danh sách về báo cáo hoạt động -->

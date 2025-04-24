@@ -39,7 +39,7 @@ class Users {
             "name" => "Nguyễn Hữu Hải Dương", "email" => "duong.nguyenhuuhai@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2211816", "password" => "Lam", "role" => "student", "image" => "/SE_Ass_Code/Images/a6.png", "status" => "Đang hoạt động",
             "name" => "Nguyễn Quốc Tuấn Lâm", "email" => "lam.nguyen0612@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
-        ["BKNetID" => "2211960", "password" => "Luong", "role" => "student", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Đang hoạt động",
+        ["BKNetID" => "2211960", "password" => "Luong", "role" => "student", "image" => "/SE_Ass_Code/Images/a1.png", "status" => "Ngưng hoạt động",
             "name" => "Phạm Gia Lương", "email" => "luong.pham2211960@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],
         ["BKNetID" => "2053079", "password" => "Hung", "role" => "student", "image" => "/SE_Ass_Code/Images/a3.png", "status" => "Đang hoạt động",
             "name" => "Sẻ Thế Hưng", "email" => "hung.sethehung253@hcmut.edu.vn", "faculty" => "Khoa Khoa học và Kỹ thuật Máy tính"],

@@ -28,7 +28,7 @@ class Bookings {
   
     function generateFakeBookings($count = 10, $currentDate) {
         $fakeBookings = [];
-        $statusList = ['completed', 'cancelled', 'expired'];
+        $statusList = ['completed', 'cancelled', 'expired', 'completed'];
         $userIds = ['2211816', '2211960', '2210615', '2053079', '2510322', '2121221',
                     '2212123', '2213321', '2251001', '2111025', '2151052', '2113612',
                     '2300012', '2300023', '2300451', '251001', '250004', '251003',
@@ -65,10 +65,75 @@ class Bookings {
     
             $fakeBookings[] = $booking;
         }
-    
         return $fakeBookings;
     }
+    function generateFakeReports($handler = true) {
+        $contentList = [
+            "Các bạn ở dãy A đang nói chuyện rất ồn ào, anh/chị quản lý xử mấy bạn giúp em ạ.",
+            "Phòng này có mùi hôi quá, không thể ngồi học được.",
+            "Có người hút thuốc trong phòng, đề nghị quản lý xử lý.",
+            "Có người ăn uống trong phòng, đề nghị quản lý nhắc nhở.",
+            "Có người sử dụng điện thoại quá to, đề nghị quản lý nhắc nhở.",
+            "Có người không đeo khẩu trang trong phòng, đề nghị quản lý nhắc nhở.",
+            "Có người không giữ vệ sinh trong phòng, đề nghị quản lý nhắc nhở.",
+            "Có người làm ồn trong giờ học, đề nghị quản lý xử lý.",
+            "Có người không tắt đèn khi ra khỏi phòng, đề nghị quản lý nhắc nhở.",
+            "Có người không trả ghế về vị trí cũ sau khi sử dụng, đề nghị quản lý nhắc nhở.",
+            "Có người không giữ trật tự trong phòng, đề nghị quản lý nhắc nhở.",
+            "Có người không sử dụng ghế đúng cách, đề nghị quản lý nhắc nhở.",
+        ];
+        $solverList = ["250001", "251004", "251002", "251001", "250004", "251003", "251000", "250003"];
+        $statusList = ["solved", "denied"];
     
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+
+        foreach ($this->Bookings_History as &$booking) {
+            if (rand(0, 1) == 0) continue; // 50% xác suất không có báo cáo
+            $timeStart = strtotime($booking["booking_date"] . " " . $booking["time_start"]);
+            $timeEnd = strtotime($booking["booking_date"] . " " . $booking["time_end"]);
+
+            if ($timeEnd - $timeStart < 5 * 60) continue; // Bỏ qua nếu khoảng thời gian quá ngắn
+
+            $reportCreatedTime = $timeStart + rand(0, intval(($timeEnd - $timeStart) / 2)); // nửa đầu
+            $reportSolvedTime = $reportCreatedTime + rand(5 * 60, 15 * 60); // xử lý sau 5-15 phút
+
+            if ($reportSolvedTime > $timeEnd) $reportSolvedTime = $timeEnd - 60;
+
+            $report = [
+                "id" => count($booking["report"]) + 1,
+                "created_at" => date("d/m/Y H:i", $reportCreatedTime),
+                "content" => $contentList[array_rand($contentList)],
+                "status" => $statusList[array_rand($statusList)],
+                "solver_id" => $solverList[array_rand($solverList)],
+                "solved_at" => date("d/m/Y H:i", $reportSolvedTime)
+            ];
+            $booking["report"][] = $report;
+        }
+        foreach ($this->Bookings_Today as &$booking) {
+            if (rand(0, 1) == 0) continue; // 50% xác suất không có báo cáo
+            if ($booking["status"] != "completed") continue; 
+            $timeStart = strtotime($booking["booking_date"] . " " . $booking["time_start"]);
+            $timeEnd = strtotime($booking["booking_date"] . " " . $booking["time_end"]);
+
+            if ($timeEnd - $timeStart < 5 * 60) continue; // Bỏ qua nếu khoảng thời gian quá ngắn
+
+            $reportCreatedTime = $timeStart + rand(0, intval(($timeEnd - $timeStart) / 2)); // nửa đầu
+
+            $report = [
+                "id" => count($booking["report"]) + 1,
+                "created_at" => date("d/m/Y H:i", $reportCreatedTime),
+                "content" => $contentList[array_rand($contentList)],
+                "status" => "waiting",
+                "solver_id" => "---",
+                "solved_at" => "---"
+            ];
+            $booking["report"][] = $report;
+        }
+
+        $_SESSION["historyBooking"] = $this->Bookings_History;
+        $_SESSION["todayBooking"] = $this->Bookings_Today;
+    }
+
     public function __construct() {
         if (isset($_SESSION["historyBooking"])) {
             $this->Bookings_History = $_SESSION["historyBooking"];
@@ -106,6 +171,7 @@ class Bookings {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $this->Bookings_Today = $this->generateFakeBookings(29, date("d/m/Y"));
             $_SESSION["todayBooking"] = $this->Bookings_Today;
+            $this->generateFakeReports();
         }
 
     }
@@ -174,6 +240,24 @@ class Bookings {
     }
     
     public function addReportByBookingID($bookingID, $content) {
+        if ($bookingID <= 1000 + count($this->Bookings_History)) {
+            foreach ($this->Bookings_History as &$booking) {
+                if ($booking["booking_id"] == $bookingID) {
+                    date_default_timezone_set("Asia/Ho_Chi_Minh");
+                    $report = [
+                        "id" => count($booking["report"]) + 1,
+                        "created_at" => date("d/m/Y H:i"),
+                        "content" => $content,
+                        "status" => "waiting",
+                        "solver_id" => "---",
+                        "solved_at" => "---"
+                    ];
+                    $booking["report"][] = $report;
+                    $_SESSION["historyBooking"] = $this->Bookings_History;
+                    return true;
+                }
+            }
+        }
         foreach ($this->Bookings_Today as &$booking) {
             if ($booking["booking_id"] == $bookingID) {
                 date_default_timezone_set("Asia/Ho_Chi_Minh");

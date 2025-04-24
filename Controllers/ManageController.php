@@ -10,9 +10,6 @@ require_once "./Models/mail.php";
 class ManageController {
     // Chức năng: hiển thị tab Quản lý
     public function index(){
-        // $userModel = new Users();
-        // $StaffsList = $userModel->getStaffsList();
-        // $Notifications = null;
         
         $bookingModel = new Bookings();
         $stat = $bookingModel->getTodayStatistic();

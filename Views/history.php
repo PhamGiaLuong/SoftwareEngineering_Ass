@@ -16,6 +16,9 @@
     </div>
 
     <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-3 mb-2">
+        <div class="p-2 border rounded-3 text-center">
+            <strong><?= $_SESSION["userID"]?> - <?= $_SESSION["name"]?></strong>
+        </div>
         <div class="d-grid col-5 col-md-3">
             <!-- Button trigger modal -->
             <a type="button" class="btn btn-main" href="/SE_Ass_Code/index.php?url=booking">
@@ -39,55 +42,6 @@
                 </tr>
             </thead>
             <tbody id="bookingHistoryBody">
-                <?php if (!empty($bookingList)): ?>
-                    <?php foreach ($bookingList as $reservation): ?>
-                        <tr>
-                            <td><?php echo $reservation['booking_id']; ?></td>
-                            <td class="text-start"><?php echo $reservation['booking_date'] ." ". $reservation['created_at']; ?></td>
-                            <td class="text-start"><?php echo $reservation['room']['name']; ?></td>
-                            <td><?php echo $reservation['room']['address']; ?></td>
-                            <td><?php echo $reservation["seat_number"] == null ? "---" : $reservation["seat_number"]; ?></td>
-                            <td><?php echo $reservation['time_start']; ?></td>
-                            <td><?php echo $reservation['time_end']; ?></td>
-                            <td><?php echo $reservation['status']; ?></td>
-                            <td onclick="toggleReplies(<?= $reservation['booking_id']; ?>)" style="color: #030391;">
-                                <?php echo count($reservation['report']); ?>
-                            </td>
-                        </tr>
-
-                        <tr id="details-<?= $reservation['booking_id']; ?>" class="collapse">
-                            <td colspan="8">
-                                <table class="table table-bordered mb-0">
-                                    <thead class="table-secondary">
-                                        <tr>
-                                            <th style="width: 20%;">Thời gian</th>
-                                            <th class="text-start" style="width: 80%;">Nội dung</th>
-                                            <th style="width: 20%;">Trạng thái</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (count($reservation['report']) <= 0):?>
-                                            <tr>
-                                                <td colspan="6" class="text-center">Không có dữ liệu báo cáo</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                        <?php foreach ($reservation['report'] as $report): ?>
-                                            <tr>
-                                                <td><?= $report['created_at']; ?></td>
-                                                <td class="text-start"><?= $report['content']; ?></td>
-                                                <td><?= $report['status']; ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="6" class="text-center">Không tìm thấy lịch sử đặt chỗ</td>
-                    </tr>
-                <?php endif; ?>
             </tbody>
         </table>
     </div>
