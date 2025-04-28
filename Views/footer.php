@@ -42,9 +42,9 @@
     </div>
     
     <script>
-        const userRole = "<?php echo $_SESSION['Role']; ?>"; // Lấy quyền từ PHP
-        const currentUserID = "<?php echo $_SESSION['userID']; ?>";
-        const currentName = "<?php echo $_SESSION['name']; ?>";
+        const userRole = "<?php echo isset($_SESSION['Role']) ? $_SESSION['Role'] : "other"; ?>"; // Lấy quyền từ PHP
+        const currentUserID = "<?php echo isset($_SESSION['userID']) ? $_SESSION['userID'] : "---"; ?>";
+        const currentName = "<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : "---"; ?>";
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

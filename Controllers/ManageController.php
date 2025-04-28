@@ -117,7 +117,7 @@ class ManageController {
             } else {
                 header('Content-Type: application/json');
                 echo json_encode([
-                    "erorr" => "Không thể thêm người dùng!"
+                    "error" => "Không thể thêm người dùng!"
                 ]);
                 exit();
             }

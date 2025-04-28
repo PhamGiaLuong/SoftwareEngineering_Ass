@@ -48,7 +48,14 @@ if (session_status() === PHP_SESSION_NONE) {
                                 alt="logo" class="img-fluid">
                         </div>
                         <h2 class="text-center col-12 mt-3" style="color: white;">
-                            HỆ THỐNG XÁC THỰC TẬP TRUNG HCMUT_SSO
+                            HỆ THỐNG XÁC THỰC
+                                <?php 
+                                    echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "TẬP TRUNG" : "";
+                                ?>
+                            <br>
+                                <?php 
+                                    echo (isset($_SESSION["DB"]) && $_SESSION["DB"] == "HCMUT") ? "HCMUT_SSO" :  "BK STUDY SPACE";
+                                ?>
                         </h2>
                     </div>
                     <div class="col-md-6 col-12 rounded-5 pt-md-4">

@@ -119,9 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.reminderCount > 0) {
                     data.remindersList.forEach(rmd => {
     
-                        // Tính thời gian giới hạn nhận phòng
-                                console.error("    fhfbgff ", rmd);
-    
                         const toast = document.createElement("div");
                         toast.className = "toast mb-3";
                         toast.id = "liveToast";
@@ -137,17 +134,30 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <small>${rmd.diff > 0 ? `${rmd.diff} phút nữa` : `${Math.abs(rmd.diff)} phút trước`}</small>
                                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                             </div>
-                            <div class="toast-body">
-                                <p class="m-1">Bạn có lịch đặt phòng ở 
-                                    <strong>${rmd.room.address}${rmd.seat_number ? " - Ghế " + rmd.seat_number : ""}</strong> vào lúc <strong>${rmd.time_start}</strong>
-                                </p>
-                                ${rmd.diff > 0
-                                    ? '<p class="m-1">Hãy chuẩn bị sẵn sàng nhận phòng nhé!</p>'
-                                    : '<p class="m-1">Hãy nhanh chóng nhận phòng trước <strong>'+ (10 + rmd.diff) +"</strong> phút nữa</p>"
-                                }
-                                <p class="m-1">Lịch đặt sẽ bị hủy nếu trễ quá 10 phút.</p>
-                            </div>
                         `;
+                        if (rmd.diff >= -10) {
+                            toast.innerHTML += `
+                                <div class="toast-body">
+                                    <p class="m-1">Bạn có lịch đặt phòng ở 
+                                        <strong>${rmd.room.address}${rmd.seat_number ? " - Ghế " + rmd.seat_number : ""}</strong> vào lúc <strong>${rmd.time_start}</strong>
+                                    </p>
+                                    ${rmd.diff > 0
+                                        ? '<p class="m-1">Hãy chuẩn bị sẵn sàng nhận phòng nhé!</p>'
+                                        : '<p class="m-1">Hãy nhanh chóng nhận phòng trước <strong>'+ (10 + rmd.diff) +"</strong> phút nữa</p>"
+                                    }
+                                    <p class="m-1">Lịch đặt sẽ bị hủy nếu trễ quá 10 phút.</p>
+                                </div>
+                            `;
+                        } else {
+                            toast.innerHTML += `
+                                <div class="toast-body">
+                                    <p class="m-1">Lịch đặt phòng của bạn ở 
+                                        <strong>${rmd.room.address}${rmd.seat_number ? " - Ghế " + rmd.seat_number : ""}</strong> vào lúc <strong>${rmd.time_start}</strong>
+                                    </p>
+                                    <strong class="m-1">Đã bị hệ thống hủy do quá hạn 10 phút.</strong>
+                                </div>
+                            `;
+                        }
                         toastBox.appendChild(toast);
                     });
                     showToast(); // Hiển thị toast
@@ -745,6 +755,7 @@ function getStatusForEditBooking() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                userID: currentUserID,
                 room_id: roomID,
                 start_time: startTime,  
                 end_time: endTime,
@@ -781,6 +792,7 @@ function getStatusForEditBooking() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                userID: currentUserID,
                 room_id: roomID,
                 start_time: startTime,
                 end_time: endTime,
@@ -824,6 +836,7 @@ function getAvailableSeat() {
     const roomID = roomSelect.value;
     const startTime = startTimeInput.value;
     const endTime = endTimeInput.value;
+    console.error(currentUserID)
     if (roomID!="---" && startTime && endTime) {
         fetch("/SE_Ass_Code/index.php?url=booking/getAvailableSeat", {
             method: "POST",
@@ -1738,18 +1751,16 @@ function loadReports(page = 1) {
 
                 // Chỉ admin mới có thể thấy nút "Khóa"
                 let handlerButtons = "";
-                if (userRole === "admin") {
-                    if (rpt.status == "waiting") {
-                        handlerButtons = `
-                            <button type="button" class="btn btn-warning" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'denied')">Từ chối</button>
-                            <button type="button" class="btn btn-primary" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'solved')">Xử lý</button>
-                        `;
-                    } else {
-                        handlerButtons = `
-                            <button type="button" class="btn btn-warning" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'denied')" disabled>Từ chối</button>
-                            <button type="button" class="btn btn-primary" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'solved')" disabled>Xử lý</button>
-                        `;
-                    }
+                if (rpt.status == "waiting") {
+                    handlerButtons = `
+                        <button type="button" class="btn btn-warning" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'denied')">Từ chối</button>
+                        <button type="button" class="btn btn-primary" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'solved')">Xử lý</button>
+                    `;
+                } else {
+                    handlerButtons = `
+                        <button type="button" class="btn btn-warning" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'denied')" disabled>Từ chối</button>
+                        <button type="button" class="btn btn-primary" onclick="solveReport(${rpt.booking_id}, ${rpt.report_id}, 'solved')" disabled>Xử lý</button>
+                    `;
                 }
 
                 row.innerHTML = `
@@ -1952,7 +1963,7 @@ function loadSpaces(roomType, page = 1) {
                 let lockButton = `<button class="btn btn-custom" onclick="changeRoomStatus('${lockAction}', ${room.id})">
                                 <i class="bi fs-5 ${lockIcon}"></i> ${lockText}
                               </button>`;
-                (userRole === "admin") ? row.innerHTML += `<td>${lockButton}</td>` : "";
+                 row.innerHTML += `<td>${lockButton}</td>`;
                 
                 table.appendChild(row);
             });

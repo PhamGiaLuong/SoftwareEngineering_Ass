@@ -31,7 +31,8 @@ class Bookings {
         $statusList = ['completed', 'cancelled', 'expired', 'completed'];
         $userIds = ['2211816', '2211960', '2210615', '2053079', '2510322', '2121221',
                     '2212123', '2213321', '2251001', '2111025', '2151052', '2113612',
-                    '2300012', '2300023', '2300451', '251001', '250004', '251003',
+                    '2300012', '2300023', '2300451', '251002', '250004', '251003',
+                    '251004', '250003', '250001', '250002', '250000', '251000',
                 ];
         $roomIds = ['101', '102', '103', '104', '105', '106',
                     '201', '202', '203', '204', '205', '206', '207', '208', '209', '210',
@@ -44,6 +45,17 @@ class Bookings {
             $endHour = $startHour + rand(1, 4);
             $createdAtTime = rand(5, $startHour - 1);
             $createdAtMin = rand(1, 55);
+
+            date_default_timezone_set("Asia/Ho_Chi_Minh"); // Set timezone
+            $currentHourNow = date("G"); // Lấy giờ hiện tại (0-23)
+            // Xác định status
+            if ($currentHourNow < $startHour) {
+                $status = "waiting";  // Chưa tới giờ đặt
+            } elseif ($currentHourNow >= $startHour && $currentHourNow < $endHour) {
+                $status = "using";    // Đang trong thời gian đặt
+            } else {
+                $status = $statusList[array_rand($statusList)]; // Đã qua thời gian đặt
+            }
     
             $booking = [
                 "booking_id"   => 1000 + $i + $offset,
@@ -54,7 +66,7 @@ class Bookings {
                 "time_end"     => str_pad($endHour, 2, "0", STR_PAD_LEFT) . ":00",
                 "created_at"   => str_pad($createdAtTime, 2, "0", STR_PAD_LEFT) . ":" . str_pad($createdAtMin, 2, "0", STR_PAD_LEFT),
                 "booking_date" => $currentDate,
-                "status"       => $statusList[array_rand($statusList)],
+                "status"       => $status,
                 "report"       => []
             ];
 
@@ -144,7 +156,7 @@ class Bookings {
                     '31/3/2025', '1/4/2025', '2/4/2025', '5/4/2025', '9/4/2025', '10/4/2025',
                     '12/4/2025', '13/4/2025', '14/4/2025', '15/4/2025', '16/4/2025'];
             foreach ($date as $d) {
-                $dailyBookings = $this->generateFakeBookings(rand(3, 17), $d);
+                $dailyBookings = $this->generateFakeBookings(rand(5, 27), $d);
                 $this->Bookings_History = array_merge($this->Bookings_History, $dailyBookings);
             }
             $_SESSION["historyBooking"] = $this->Bookings_History;
@@ -169,7 +181,7 @@ class Bookings {
             $this->Bookings_History = $_SESSION["historyBooking"];
         } else {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
-            $this->Bookings_Today = $this->generateFakeBookings(29, date("d/m/Y"));
+            $this->Bookings_Today = $this->generateFakeBookings(47, date("d/m/Y"));
             $_SESSION["todayBooking"] = $this->Bookings_Today;
             $this->generateFakeReports();
         }
@@ -362,7 +374,7 @@ class Bookings {
     public function getReminderForUser($user_id) {
         $reminders = [];
         foreach ($this->Bookings_Today as &$booking) {
-            if ($booking["user_id"] == $user_id && ($booking["status"] == "waiting" || $booking["status"] == "overdue")) {
+            if ($booking["user_id"] == $user_id && ($booking["status"] == "waiting" || $booking["status"] == "overdue" || $booking["status"] == "expired")) {
                 date_default_timezone_set("Asia/Ho_Chi_Minh");
                 $a = strtotime($booking["time_start"]);
                 $b = strtotime(date("H:i"));
@@ -383,7 +395,7 @@ class Bookings {
                 } else if ($diff <= 0 && $diff >= -10) {
                     $rmd["status"] = "overdue";
                     $reminders[] = $rmd;
-                } else if ($diff < -10 && $booking["status"] != "using") {
+                } else if ($diff >= -20 && $booking["status"] != "using") {
                     $rmd["status"] = "expired";
                     $booking["status"] = "expired";
                     $reminders[] = $rmd;
@@ -506,7 +518,7 @@ class Bookings {
                 $timeStart = strtotime($booking["time_start"]);
 
                 // Kiểm tra: nếu còn hơn 5 phút nữa mới tới giờ đặt thì từ chối
-                if ($timeStart - $now > 300) {
+                if ($new_status == "using" && $timeStart - $now > 300) {
                     return false;
                 }
 

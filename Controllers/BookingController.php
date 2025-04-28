@@ -2,10 +2,9 @@
 
 // Author: Gia Luong
 
+require_once "./Models/rooms.php";
 require_once "./Models/users.php";
 require_once "./Models/bookings.php";
-require_once "./Models/rooms.php";
-require_once "./Models/mail.php";
 
 class BookingController {
     // Chức năng: hiển thị tab Đặt phòng
@@ -196,7 +195,7 @@ class BookingController {
             if ($cancel) {
                 header('Content-Type: application/json');
                 echo json_encode([
-                    "success" => "Bạn đã hủy lịch đặt phòng thành công, thông tin sẽ được gửi qua email của bạn!"
+                    "success" => "Bạn đã hủy lịch đặt phòng thành công!"
                 ]);
                 exit();
             } else {
@@ -249,7 +248,7 @@ class BookingController {
             if ($editBooking) {
                 header('Content-Type: application/json');
                 echo json_encode([
-                    "success" => "Bạn đã thay đổi thông tin lịch đặt phòng thành công, thông tin sẽ được gửi qua email của bạn!"
+                    "success" => "Bạn đã thay đổi thông tin lịch đặt phòng thành công!"
                 ]);
                 exit();
             } else {
