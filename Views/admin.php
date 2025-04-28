@@ -20,11 +20,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark text-center" data-bs-toggle="pill" href="#spaceManage">
-                    KHÔNG GIAN HỌC TẬP
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-dark text-center" data-bs-toggle="pill" href="#issueManage">
                     SỰ CỐ VÀ BẢO TRÌ
                 </a>
@@ -96,58 +91,6 @@
 
         </div>
 
-        <!-- Quản lý không gian học tập -->
-        <div class="tab-pane fade" id="spaceManage">
-            <div class="d-flex justify-content-center col-12 mb-3">
-                <h2>QUẢN LÝ KHÔNG GIAN HỌC TẬP</h2>
-            </div>
-
-            <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-2 my-2">
-                <div class="d-grid col-12 col-md-3">
-                    <select id="roomFilter" class="form-select">
-                        <!-- <option disabled selected>Lựa chọn chủ đề</option> -->
-                        <option value="self_study" selected>Phòng tự học</option>
-                        <option value="dual">Phòng học đôi</option>
-                        <option value="group">Phòng học nhóm</option>
-                    </select>
-                </div>
-                <!-- Nút báo cáo tình trạng -->
-                <div class="d-grid col-12 col-md-3">
-                    <a type="button text-center" class="btn btn-report" data-bs-toggle="modal" data-bs-target="#reportSpaceModal">
-                        Báo cáo tình trạng không gian học tập
-                    </a>
-                </div>
-                <!-- Nút chỉnh sửa không gian -->
-                <div class="d-grid col-12 col-md-3">
-                    <a type="button text-center" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#editSpaceModal">
-                        Thêm phòng
-                    </a>
-                </div>
-            </div>
-            <!-- Bảng danh sách không gian học tập -->
-            <div class="overflow-x-auto">
-                <table class="table table-hover table-bordered text-center">
-                    <thead class="table-dark custom-thead">
-                        <tr>
-                            <th style="width: 100px;">ID phòng</th>
-                            <th style="width: 200px;">Tên phòng</th>
-                            <th style="width: 100px;">Vị trí</th>
-                            <th style="width: 100px;">Sức chứa</th>
-                            <th style="width: 150px;">Tình trạng</th>
-                            <th style="width: 150px;">Tình trạng sử dụng</th>
-                            <th style="width: 200px;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody id="spaceTableBody">
-                        <!-- Dữ liệu sẽ được load qua JS -->
-                         
-                    </tbody>
-                </table>
-            </div>
-            <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
-        </div>
-        
         <!-- Quản lý sự cố và bảo trì -->
         <div class="tab-pane fade" id="issueManage">
             <div class="d-flex justify-content-center col-12 mb-3">
@@ -263,94 +206,6 @@
                         </div>
                         <div class="col-5 d-grid">
                             <button type="submit" class="btn btn-success">Lưu</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal: Chỉnh sửa không gian -->
-<div class="modal fade" id="editSpaceModal" tabindex="-1" aria-labelledby="editSpaceModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editSpaceModalLabel" style="font-weight: bold; color: #030391;">Thêm phòng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editSpaceForm">
-                    <!-- <div class="mb-3">
-                        <label for="roomId" class="form-label">ID phòng</label>
-                        <input type="text" class="form-control underline-input" id="roomId" placeholder="Nhập ID phòng" required>
-                    </div> -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Tên phòng</label>
-                        <input type="text" class="form-control underline-input" name="name" placeholder="Nhập tên phòng" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="building" class="form-label">Tòa nhà</label>
-                        <input type="text" class="form-control underline-input" name="building" placeholder="Nhập tòa nhà" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="room" class="form-label">Số phòng</label>
-                        <input type="text" class="form-control underline-input" name="room" placeholder="Nhập số phòng" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Loại phòng</label>
-                        <select class="form-select" name="type" required>
-                            <option value="self_study">Phòng tự học</option>
-                            <option value="dual">Phòng học đôi</option>
-                            <option value="group">Phòng học nhóm</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="capacity" class="form-label">Sức chứa</label>
-                        <input type="number" class="form-control underline-input" name="capacity" placeholder="Nhập sức chứa" required>
-                    </div>
-                    <div class="col-12 d-flex flex-wrap justify-content-between mt-2">
-                        <div class="col-5 d-grid">
-                            <button type="reset" class="btn btn-outline-main">Nhập lại</button>
-                        </div>
-                        <div class="col-5 d-grid">
-                            <button type="submit" class="btn btn-success">Lưu</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal báo cáo tình trạng không gian học tập -->
-<div class="modal fade" id="reportSpaceModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reportSpaceModalLabel" style="font-weight: bold; color: #030391;">Báo cáo tình trạng không gian học tập</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="stateForm">
-                    <div class="mb-3">
-                        <label for="issueRoom" class="form-label">ID phòng</label>
-                        <select id="stateRoom" class="form-select">
-                            <option value="1201">1201</option>
-                            <option value="1202">1202</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="stateDescription" class="form-label">Mô tả tình trạng</label>
-                        <textarea id="issueDescription" class="form-control"></textarea>
-                    </div>
-                    <div class="col-12 d-flex flex-wrap justify-content-between mt-2">
-                        <div class="col-5 d-grid">
-                            <button type="reset" class="btn btn-outline-main">Nhập lại</button>
-                        </div>
-                        <div class="col-5 d-grid">
-                            <button type="submit" class="btn btn-success">Gửi</button>
                         </div>
                     </div>
                 </form>

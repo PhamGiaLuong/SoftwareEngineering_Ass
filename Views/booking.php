@@ -21,19 +21,6 @@
             <strong><?= $_SESSION["userID"]?> - <?= $_SESSION["name"]?></strong>
         </div>
     </div>
-    <!-- Hiển thị thông báo thành công/thất bại nếu có -->
-    <div class="alert alert-danger text-center m-3 d-flex align-items-center d-none col-12" role="alert" id="errorAlert">
-        <div class="col-11 d-flex align-items-center gap-3">
-            <i class="bi bi-exclamation-circle"></i>
-            <p class="m-0" id="errorContent"></p>
-        </div>
-    </div>
-    <div class="alert alert-success text-center m-3 d-flex align-items-center d-none col-12" role="alert" id="successAlert">
-        <div class="col-11 d-flex align-items-center gap-3">
-            <i class="bi bi-check-circle"></i>
-            <p class="m-0" id="successContent"></p>
-        </div>
-    </div>
 
     <!-- Lựa chọn đặt phòng -->
     <div class="col-12 d-flex flex-wrap justify-content-between gap-5">
@@ -130,11 +117,11 @@
                         <div class="col-12 mt-2 d-flex justify-content-between">
                             <div class="mb-3 col-5">
                                 <label for="start" class="form-label">Thời gian bắt đầu</label>
-                                <input class="form-control" type="time" name="start_time" value="06:00"  min="00:00" max="23:59" required>
+                                <input class="form-control" type="time" name="start_time" value="06:00"  min="06:00" max="20:00" required>
                             </div>
                             <div class="mb-3 col-5">
                                 <label for="end" class="form-label">Thời gian kết thúc</label>
-                                <input class="form-control" type="time" name="end_time" value="07:00" min="00:30" max="23:59" required>
+                                <input class="form-control" type="time" name="end_time" value="07:00" min="06:30" max="21:00" required>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -213,11 +200,11 @@
                         <div class="col-12 mt-2 d-flex justify-content-between">
                             <div class="mb-3 col-5">
                                 <label for="start" class="form-label">Thời gian bắt đầu</label>
-                                <input class="form-control" type="time" name="start_room" value="06:00" min="06:00" max="23:59" required>
+                                <input class="form-control" type="time" name="start_room" value="06:00" min="06:00" max="20:00" required>
                             </div>
                             <div class="mb-3 col-5">
                                 <label for="end" class="form-label">Thời gian kết thúc</label>
-                                <input class="form-control" type="time" name="end_room" value="07:00" min="06:30" max="23:59" required>
+                                <input class="form-control" type="time" name="end_room" value="07:00" min="06:30" max="21:00" required>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -423,6 +410,21 @@
         </div>
     </div>
 
+    
+    <!-- Hiển thị thông báo thành công/thất bại nếu có -->
+    <div class="alert alert-danger text-center m-3 d-flex align-items-center d-none col-12" role="alert" id="errorAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-exclamation-circle"></i>
+            <p class="m-0" id="errorContent"></p>
+        </div>
+    </div>
+    <div class="alert alert-success text-center m-3 d-flex align-items-center d-none col-12" role="alert" id="successAlert">
+        <div class="col-11 d-flex align-items-center gap-3">
+            <i class="bi bi-check-circle"></i>
+            <p class="m-0" id="successContent"></p>
+        </div>
+    </div>
+    
     <!-- Danh sách phòng đã đặt trong ngày -->
     <div id="todayBookingList" class="overflow-x-auto d-none my-3">
         <hr>
