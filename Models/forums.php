@@ -175,7 +175,7 @@ class Forums {
             "id" => "9",
             "title" => "Review khu tự học Tòa H1 - Trải nghiệm thực tế",
             "topic" => "Review Không gian học tập",
-            "author" => "251102",
+            "author" => "251002",
             "time" => "5/3/2025 10:00",
             "status" => "Đang mở",
             "content" => '

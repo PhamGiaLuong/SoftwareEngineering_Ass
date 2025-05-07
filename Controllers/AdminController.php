@@ -8,6 +8,11 @@ require_once "./Models/rooms.php";
 class AdminController {
     // Chức năng: hiển thị tab Quản trị
     public function index(){
+        $roomModel = new Rooms();
+        $selfRoomList = $roomModel->GetRoomList("self_study");
+        $dualRoomList = $roomModel->GetRoomList("dual");
+        $groupRoomList = $roomModel->GetRoomList("group");
+
         require_once('./Views/admin.php');
     }
 
@@ -90,6 +95,54 @@ class AdminController {
             header('Content-Type: application/json');
             echo json_encode([
                 "error" => "Không tìm thấy phòng!"
+            ]);
+            exit();
+        }
+    }
+
+    // Chức năng: lấy danh sách sự cố cần giải quyết
+    public function getIssues($page) {
+        $roomModel = new Rooms();
+        $issueList = $roomModel->GetIssueList();
+
+        // Phân trang dữ liệu
+        $offset = ($page - 1) * 10;
+        $paginatedList = array_reverse($issueList); 
+        $paginatedList = array_slice($paginatedList, $offset, 10);
+
+        $userModel = new Users();
+        foreach ($paginatedList as $key => $issue) {
+            $user = $userModel->getUserByID($issue["reporter"]);
+            $paginatedList[$key]["reporterName"] = $user["name"];
+
+            $room = $roomModel->GetRoomByID($issue["room_id"]);
+            $paginatedList[$key]["roomName"] = $room["name"] ." - ". $room["address"];
+        }
+
+        // Trả về chuỗi json
+        header('Content-Type: application/json');
+        echo count($paginatedList) > 0 
+            ? json_encode([
+                'issueList' => $paginatedList,
+                'totalPages' => ceil(count($issueList) / 10)
+            ]) 
+            : json_encode(["info" => "Không tìm thấy dữ liệu người dùng"]);
+        exit;
+    }
+
+    // Chức năng: giải quyết sự cố
+    public function solveIssue($issueID) {
+        $roomModel = new Rooms();
+        if ($roomModel->SolveIssueByID($issueID)) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                "success" => "Đã giải quyết sự cố thành công!"
+            ]);
+            exit();
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode([
+                "error" => "Không tìm thấy sự cố!"
             ]);
             exit();
         }

@@ -159,7 +159,7 @@
                 </table>
             </div>
             <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
+            <div id="allBookingsList"></div>
 
         </div>
 
@@ -186,7 +186,7 @@
                 </div>
                 <!-- Nút chỉnh sửa không gian -->
                 <div class="d-grid col-12 col-md-3">
-                    <a type="button text-center" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#editSpaceModal">
+                    <a type="button text-center" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#addRoomModal">
                         Thêm phòng
                     </a>
                 </div>
@@ -212,7 +212,7 @@
                 </table>
             </div>
             <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
+            <div id="loadSpace"></div>
         </div>
         
         <!-- Quản lý thông báo chung -->
@@ -252,7 +252,7 @@
                 </table>
             </div>
             <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
+            <div id="loadAnnouncements"></div>
         </div>
 
         <!-- Quản lý báo cáo hoạt động -->
@@ -293,7 +293,7 @@
                 </table>
             </div>
             <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
+            <div id="loadReports"></div>
         
         </div>
     </div>
@@ -328,8 +328,8 @@
         </div>
     </div>
 
-    <!-- Modal: Chỉnh sửa không gian -->
-    <div class="modal fade" id="editSpaceModal" tabindex="-1" aria-labelledby="editSpaceModalLabel" aria-hidden="true">
+    <!-- Modal: Thêm phòng -->
+    <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="editSpaceModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -337,7 +337,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editSpaceForm">
+                    <form id="addRoomForm">
                         <!-- <div class="mb-3">
                             <label for="roomId" class="form-label">ID phòng</label>
                             <input type="text" class="form-control underline-input" id="roomId" placeholder="Nhập ID phòng" required>
@@ -380,26 +380,86 @@
         </div>
     </div>
 
+    <!-- Modal: Sửa thông tin phòng -->
+    <div class="modal fade" id="editRoomModal" tabindex="-1" aria-labelledby="editSpaceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSpaceModalLabel" style="font-weight: bold; color: #030391;">Sửa thông tin phòng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editRoomForm">
+                        <div class="mb-3">
+                            <label for="roomId" class="form-label">ID phòng</label>
+                            <input type="text" class="form-control underline-input" id="roomId" name="roomId" placeholder="11111" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Tên phòng</label>
+                            <input type="text" class="form-control underline-input" name="roomName" placeholder="Nhập tên phòng" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="building" class="form-label">Tòa nhà</label>
+                            <input type="text" class="form-control underline-input" name="buildingE" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="room" class="form-label">Số phòng</label>
+                            <input type="text" class="form-control underline-input" name="roomE" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Loại phòng</label>
+                            <input type="text" class="form-control underline-input" name="type" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacity" class="form-label">Sức chứa</label>
+                            <input type="number" class="form-control underline-input" name="capacityE" required>
+                        </div>
+                        <div class="col-12 d-flex flex-wrap justify-content-between mt-2">
+                            <div class="col-5 d-grid">
+                                <button type="reset" class="btn btn-outline-main">Nhập lại</button>
+                            </div>
+                            <div class="col-5 d-grid">
+                                <button type="submit" class="btn btn-success">Lưu</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal báo cáo tình trạng không gian học tập -->
     <div class="modal fade" id="reportSpaceModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportSpaceModalLabel" style="font-weight: bold; color: #030391;">Báo cáo tình trạng không gian học tập</h5>
+                    <h5 class="modal-title" id="reportSpaceModalLabel" style="font-weight: bold; color: #030391;">Báo cáo tình trạng phòng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="stateForm">
+                    <form id="reportRoomForm">
                         <div class="mb-3">
-                            <label for="issueRoom" class="form-label">ID phòng</label>
-                            <select id="stateRoom" class="form-select">
-                                <option value="1201">1201</option>
-                                <option value="1202">1202</option>
+                            <label for="issueRoom" class="form-label">Người báo cáo</label>
+                            <input type="text" class="form-control underline-input" name="userID" value="<?= $_SESSION["userID"] ?>" readonly>
+                        </div>
+                        <div class="col-12 my-2 room-select" id="issueRoom">
+                            <label for="room2_id">Chọn phòng</label>
+                            <select class="form-select" name="issueRoom" required>
+                                <option value="---" disabled selected>Hãy chọn phòng</option>
+                                <?php foreach($selfRoomList as $room): ?>
+                                    <option value="<?= $room["id"]; ?>">Phòng tự học - <?= $room["address"]; ?></option>
+                                <?php endforeach; ?>
+                                <?php foreach($dualRoomList as $room): ?>
+                                    <option value="<?= $room["id"]; ?>">Phòng học đôi - <?= $room["address"]; ?></option>
+                                <?php endforeach; ?>
+                                <?php foreach($groupRoomList as $room): ?>
+                                    <option value="<?= $room["id"]; ?>">Phòng học nhóm - <?= $room["address"]; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="stateDescription" class="form-label">Mô tả tình trạng</label>
-                            <textarea id="issueDescription" class="form-control"></textarea>
+                            <textarea id="issueDescription" class="form-control" name="content"></textarea>
                         </div>
                         <div class="col-12 d-flex flex-wrap justify-content-between mt-2">
                             <div class="col-5 d-grid">

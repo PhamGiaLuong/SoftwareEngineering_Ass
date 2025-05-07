@@ -46,7 +46,7 @@
         </table>
     </div>
     <!-- Hiển thị thanh phân trang -->
-    <div id="pagination"></div>
+    <div id="bookingList"></div>
 </div>
 
     <!-- Hiển thị thông báo động cho người dùng -->

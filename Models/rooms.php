@@ -51,6 +51,44 @@ class Rooms {
         ["id" => "308", "address" => "H6-304", "name" => "Phòng nhóm số 8", "type" => "group", "status" => "available"],
         ["id" => "309", "address" => "H6-305", "name" => "Phòng nhóm số 9", "type" => "group", "status" => "available"]
     ];
+    private $issueReports = [
+        [
+            "id" => "1",
+            "room_id" => "301", "reporter" => "251001", "status" => "solved", 
+            "created_at" => "15/03/2025 11:30", "solved_at" => "16/03/2025 10:00", 
+            "content" => "Bảng trắng bị bẩn", 
+        ],
+        [
+            "id" => "2",
+            "room_id" => "201", "reporter" => "251001", "status" => "solved", 
+            "created_at" => "19/03/2025 11:30", "solved_at" => "19/03/2025 16:00", 
+            "content" => "Ghế bị hỏng", 
+        ],
+        [
+            "id" => "3",
+            "room_id" => "101", "reporter" => "251003", "status" => "solved", 
+            "created_at" => "11/04/2025 13:32", "solved_at" => "13/04/2025 10:00", 
+            "content" => "Wifi không kết nối được", 
+        ],
+        [
+            "id" => "4",
+            "room_id" => "303", "reporter" => "251004", "status" => "solved", 
+            "created_at" => "15/04/2025 08:30", "solved_at" => "16/04/2025 11:00", 
+            "content" => "Đèn bị hỏng và điều hòa không hoạt động", 
+        ],
+        [
+            "id" => "5",
+            "room_id" => "104", "reporter" => "251002", "status" => "solved", 
+            "created_at" => "01/05/2025 11:30", "solved_at" => "02/05/2025 10:00", 
+            "content" => "Điện chập chờn", 
+        ],
+        [
+            "id" => "6",
+            "room_id" => "102", "reporter" => "251003", "status" => "waiting", 
+            "created_at" => "07/05/2025 11:30", "solved_at" => "---", 
+            "content" => "Điều hòa không hoạt động", 
+        ],
+    ];
 
     public function __construct() {
         if (isset($_SESSION["selfRoom"])){
@@ -70,6 +108,9 @@ class Rooms {
         }
         if (isset($_SESSION["groupRoom"])) {
             $this->Room_Study_Group = $_SESSION["groupRoom"];
+        }
+        if (isset($_SESSION["issueReports"])) {
+            $this->issueReports = $_SESSION["issueReports"];
         }
     }
 
@@ -184,6 +225,8 @@ class Rooms {
                         "address" => $room["address"],
                         "name" => $room["name"],
                         "id" => $room["id"],
+                        "total_seats" => $room["total_seats"],
+                        "type" => $room["type"],
                     ];
                     return $result;
                 }
@@ -207,5 +250,71 @@ class Rooms {
                 return $room["available_seats"];
         }
         return 0;
+    }
+
+    public function EditRoomByID($roomID, $address, $name, $total_seats) {
+        if ($roomID < 200) {
+            foreach ($this->Room_Self_Study as &$room) {
+                if ($room["id"] == $roomID) {
+                    $room["address"] = $address;
+                    $room["name"] = $name;
+                    $room["total_seats"] = $total_seats;
+                    $_SESSION["selfRoom"] = $this->Room_Self_Study;
+                    return true;
+                }
+            }
+        } else if ($roomID < 300) {
+            foreach ($this->Room_Study_Dual as &$room) {
+                if ($room["id"] == $roomID) {
+                    $room["address"] = $address;
+                    $room["name"] = $name;
+                    $_SESSION["dualRoom"] = $this->Room_Study_Dual;
+                    return true;
+                }
+            }
+        } else {
+            foreach ($this->Room_Study_Group as &$room) {
+                if ($room["id"] == $roomID) {
+                    $room["address"] = $address;
+                    $room["name"] = $name;
+                    $_SESSION["groupRoom"] = $this->Room_Study_Group;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function ReportRoomByID($roomID, $reporter, $content){
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $report = [
+            "id" => count($this->issueReports) + 1,
+            "room_id" => $roomID,
+            "reporter" => $reporter,
+            "status" => "waiting",
+            "created_at" => date("d/m/Y H:i"),
+            "solved_at" => "---",
+            "content" => $content
+        ];
+        $this->issueReports[] = $report;
+        $_SESSION["issueReports"] = $this->issueReports;
+        return true;
+    }
+
+    public function GetIssueList(){
+        return $this->issueReports;
+    }
+
+    public function SolveIssueByID($issueID) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        foreach ($this->issueReports as &$issue) {
+            if ($issue["id"] == $issueID) {
+                $issue["status"] = "solved";
+                $issue["solved_at"] = date("d/m/Y H:i");
+                $_SESSION["issueReports"] = $this->issueReports;
+                return true;
+            }
+        }
+        return false;
     }
 }

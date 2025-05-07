@@ -10,9 +10,13 @@ require_once "./Models/mail.php";
 class ManageController {
     // Chức năng: hiển thị tab Quản lý
     public function index(){
-        
         $bookingModel = new Bookings();
         $stat = $bookingModel->getTodayStatistic();
+
+        $roomModel = new Rooms();
+        $selfRoomList = $roomModel->GetRoomList("self_study");
+        $dualRoomList = $roomModel->GetRoomList("dual");
+        $groupRoomList = $roomModel->GetRoomList("group");
 
         require_once('./Views/manage.php');
     }
@@ -393,6 +397,75 @@ class ManageController {
             ]) 
             : json_encode(["info" => "Không tìm thấy dữ liệu về báo cáo"]);
         exit;
+    }
+
+    // Chức năng: tìm phòng theo id
+    public function findRoomByID($roomID) {
+        $roomModel = new Rooms();
+        $room = $roomModel->getRoomByID($roomID);
+        if ($room) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                "success" => "Đã tìm thấy phòng " . $roomID . "!",
+                "room" => $room
+            ]);
+            exit();
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode([
+                "error" => "Không tìm thấy phòng!"
+            ]);
+            exit();
+        }
+    }
+
+    // Chức năng: sửa thông tin phòng
+    public function editRoom() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $roomID = $_POST["roomId"];
+            $address = $_POST["buildingE"] . "-".$_POST["roomE"];
+            $name = $_POST["roomName"];
+            $total_seats = $_POST["capacityE"];
+
+            $roomModel = new Rooms();
+            if ($roomModel->EditRoomByID($roomID, $address, $name, $total_seats)) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "success" => "Đã sửa thông tin phòng thành công!"
+                ]);
+                exit();
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "error" => "Không thể sửa thông tin phòng!"
+                ]);
+                exit();
+            }
+        }
+    }
+
+    // Chức năng: báo cáo tình trạng phòng
+    public function reportRoom() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $roomID = $_POST["issueRoom"];
+            $reporter = $_SESSION["userID"];
+            $content = $_POST["content"];
+
+            $roomModel = new Rooms();
+            if ($roomModel->ReportRoomByID($roomID, $reporter, $content)) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "success" => "Đã gửi báo cáo thành công!"
+                ]);
+                exit();
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "error" => "Không thể gửi báo cáo!"
+                ]);
+                exit();
+            }
+        }
     }
 }
 

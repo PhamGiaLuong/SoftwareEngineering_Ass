@@ -1308,7 +1308,7 @@ function changePostStatus(action, postID) {
 
 // Hàm render phân trang
 function renderPagination(data, option, currentPage, totalPages) {
-    const paginationContainer = document.getElementById('pagination');
+    const paginationContainer = document.getElementById(data);
     if (!paginationContainer) return;
     if (totalPages <= 1) {
         paginationContainer.innerHTML = ''; // Xóa nội dung cũ
@@ -1391,6 +1391,12 @@ function changePage(data, option, page) {
             break;
         case "loadReports":
             loadReports(page);
+            break;
+        case "loadIssues":
+            loadIssues(page);
+            break;
+        case "loadAnnouncements":
+            loadAnnouncements(page);
             break;
         case "bookingList":
             getBookingList(page);
@@ -1876,7 +1882,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Thêm phòng mới
-    const addRoom = document.getElementById("editSpaceForm");
+    const addRoom = document.getElementById("addRoomForm");
     if (addRoom) {
         addRoom.addEventListener("submit", function (event) {
             event.preventDefault();
@@ -1896,14 +1902,78 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     if (data.success) {
                         let roomType = formData.get("type");
-                        console.error(roomType);
-                        console.error(formData);
                         showAlertMessage(data.success, "success");
                         loadSpaces(roomType);
                     }
                 })
                 .catch(error => console.error("Lỗi:", error));
         });
+    }
+
+
+    // Sửa thông tin phòng
+    const editRoom = document.getElementById("editRoomForm");
+    if (editRoom) {
+        editRoom.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            document.querySelector(".modal .btn-close").click();
+            editRoom.reset();
+
+            fetch("/SE_Ass_Code/index.php?url=manage/editRoom", {
+                method: "POST",
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showAlertMessage(data.error, "error");
+                        return;
+                    }
+                    if (data.success) {
+                        let roomType;
+                        if (formData.get("roomId") < 200) roomType = "self_study";
+                        else if (formData.get("roomId") < 300) roomType = "dual";
+                        else roomType = "group";
+                        showAlertMessage(data.success, "success");
+                        loadSpaces(roomType);
+                    }
+                })
+                .catch(error => console.error("Lỗi:", error));
+        });
+    }
+    
+    // Báo cáo tình trạng phòng
+    const reportRoom = document.getElementById("reportRoomForm");
+    if (reportRoom) {
+        reportRoom.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            document.querySelector(".modal .btn-close").click();
+            reportRoom.reset();
+
+            fetch("/SE_Ass_Code/index.php?url=manage/reportRoom", {
+                method: "POST",
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showAlertMessage(data.error, "error");
+                        return;
+                    }
+                    if (data.success) {
+                        showAlertMessage(data.success, "success");
+                        if (document.getElementById("issueTableBody")) loadIssues();
+                    }
+                })
+                .catch(error => console.error("Lỗi:", error));
+        });
+    }
+    
+    const issueTableBody = document.getElementById("issueTableBody");
+    if (issueTableBody) {
+        loadIssues();
     }
 });
 
@@ -1956,14 +2026,17 @@ function loadSpaces(roomType, page = 1) {
                         <td>${room.status}</td>
                     `;
                 }
-                let lockText = room.status === "lock" ? "Mở" : "Khóa";
                 let lockIcon = room.status === "lock" ? "bi-unlock-fill" : "bi-lock-fill";
                 let lockAction = room.status === "lock" ? "unlockRoom" : "lockRoom";
             
                 let lockButton = `<button class="btn btn-custom" onclick="changeRoomStatus('${lockAction}', ${room.id})">
-                                <i class="bi fs-5 ${lockIcon}"></i> ${lockText}
+                                <i class="bi fs-5 ${lockIcon}"></i>
                               </button>`;
-                 row.innerHTML += `<td>${lockButton}</td>`;
+                              
+                let editButton = `<button class="btn btn-warning" onclick="editRoom(${room.id})" data-bs-toggle="modal" data-bs-target="#editRoomModal">
+                                <i class="bi fs-5 bi-pencil-square"></i>
+                            </button>`;
+                 row.innerHTML += `<td>${lockButton} ${editButton}</td>`;
                 
                 table.appendChild(row);
             });
@@ -2028,6 +2101,103 @@ function changeRoomStatus(action, roomID) {
     }
 }
 
+function editRoom(roomID) {
+    fetch(`/SE_Ass_Code/index.php?url=manage/findRoomByID/${roomID}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            showAlertMessage(data.error, "error");
+            return;
+        }
+        if (data.room) {
+            const room = data.room;
+            
+            const [building, roomNumber] = room.address.split("-");// Xác định capacity theo id
+            let capacity, type;
+            if (room.id < 200) {
+                capacity = room.total_seats;
+                type = "Phòng tự học";
+            } else if (room.id < 300) {
+                capacity = 2;
+                type = "Phòng học đôi";
+            } else {
+                capacity = 10;
+                type = "Phòng học nhóm";
+            }
+            console.error(building, roomNumber, capacity, type)
 
+            document.getElementById("roomId").value = room.id;
+            document.querySelector("input[name='roomName']").value = room.name;
+            document.querySelector("input[name='buildingE']").value = building;
+            document.querySelector("input[name='roomE']").value = roomNumber;
+            document.querySelector("input[name='type']").value = type;
+            document.querySelector("input[name='capacityE']").value = capacity;
+        }
+    })
+    .catch(error => {
+        console.error("Lỗi khi tải dữ liệu:", error);
+        showAlertMessage("Lỗi khi tải dữ liệu", "error");
+    });
+}
 
+function loadIssues(page = 1) {
+    currentPage = page;
+    const table = document.getElementById('issueTableBody');
+    if (!table) return;
+    fetch(`/SE_Ass_Code/index.php?url=admin/getIssues/${page}`)    
+        .then(response => response.json())
+        .then(data => {
+            table.innerHTML = '';
+            if (data.info) {
+                table.innerHTML = `<tr><td colspan="6" class="text-center">${data.info}</td></tr>`;
+                return;
+            }
 
+            let issues = data.issueList;
+            // Cập nhật tổng số trang
+            let totalPages = data.totalPages || 1;
+            issues.forEach(issue => {
+                let row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${issue.id}</td>
+                    <div class="text-start">${issue.content}</div>
+                    <td class="text-start">${issue.roomName}</td>
+                    <td>${issue.reporterName} - ${issue.created_at}</td>
+                    <td>${issue.status} - ${issue.solved_at}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="solveIssue(${issue.id})" ${issue.status == "waiting" ? "" : "disabled"}>
+                            Xử lý
+                        </button>
+                    </td>
+                    `;
+                
+                table.appendChild(row);
+            });
+            // Render phân trang
+            renderPagination("loadIssues", "none", page, totalPages);
+        })
+        .catch(error => {
+            console.error("Lỗi khi tải dữ liệu:", error);
+            table.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Lỗi khi tải dữ liệu</td></tr>`;
+        });
+}
+
+function solveIssue(issueID) {
+    fetch(`/SE_Ass_Code/index.php?url=admin/solveIssue/${issueID}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            showAlertMessage(data.error, "error");
+            return;
+        }
+        if (data.success) {
+            showAlertMessage(data.success, "success");
+        }
+        if (document.getElementById("issueTableBody")) loadIssues();
+    })
+    .catch(error => {
+        console.error("Lỗi khi tải dữ liệu:", error);
+    });
+
+}
