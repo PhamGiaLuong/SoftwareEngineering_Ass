@@ -81,7 +81,7 @@
                 </table>
             </div>
             <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
+            <div id="loadUsers"></div>
             
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-report mb-3" data-bs-toggle="modal" data-bs-target="#reportAccountModal">
@@ -97,44 +97,10 @@
                 <h2>QUẢN LÝ SỰ CỐ VÀ BẢO TRÌ</h2>
             </div>
 
-            <!-- Bảng danh sách sự cố -->
-            <div class="overflow-x-auto">
-                <table class="table table-hover table-bordered text-center">
-                    <thead class="table-dark custom-thead">
-                        <tr>
-                            <th style="width: 100px;">ID sự cố</th>
-                            <th style="width: 200px;">Vấn đề</th>
-                            <th style="width: 100px;">Phòng liên quan</th>
-                            <th style="width: 150px;">Thời gian</th>
-                            <th style="width: 100px;">Trạng thái</th>
-                            <th style="width: 100px;">Phản hồi</th>
-                            <th style="width: 200px;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody id="issueTableBody">
-                        <!-- Dữ liệu sẽ được load qua JS -->
-                        <tr>
-                            <td>1111</td>
-                            <td>Chủ đề số 1</td>
-                            <td>Trần Văn A</td>
-                            <td>5/3/2025 9:32</td>
-                            <td>Đang mở</td>
-                            <td>3 phản hồi</td>
-                            <td>
-                                <button class="btn btn-custom btn-warning">Mở</button>
-                                <button class="btn btn-custom btn-danger">Khóa</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Hiển thị thanh phân trang -->
-            <div id="pagination"></div>
-
             <div class="col-12 d-flex flex-wrap justify-content-md-end justify-content-between gap-3 my-2"> 
                 <!-- Nút báo cáo sự cố -->
                 <div class="d-grid col-12 col-md-3">
-                    <a type="button" class="btn btn-report" data-bs-toggle="modal" data-bs-target="#reportIssueModal">
+                    <a type="button" class="btn btn-report" data-bs-toggle="modal" data-bs-target="#reportSpaceModal">
                         Báo cáo sự cố
                     </a>
                 </div>
@@ -145,6 +111,27 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Bảng danh sách sự cố -->
+            <div class="overflow-x-auto">
+                <table class="table table-hover table-bordered text-center">
+                    <thead class="table-dark custom-thead">
+                        <tr>
+                            <th style="width: 50px;">ID</th>
+                            <th style="width: 300px;">Vấn đề</th>
+                            <th style="width: 200px;">Phòng</th>
+                            <th style="width: 300px;">Thời gian tạo</th>
+                            <th style="width: 200px;">Trạng thái</th>
+                            <th style="width: 100px;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issueTableBody">
+                        <!-- Dữ liệu sẽ được load qua JS -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Hiển thị thanh phân trang -->
+            <div id="loadIssues"></div>
         </div>
     </div>
 </div>
@@ -276,29 +263,39 @@
     </div>
 </div>
 
-<!-- Modal báo cáo sự cố -->
-<div class="modal fade" id="reportIssueModal" tabindex="-1">
+
+<!-- Modal báo cáo tình trạng không gian học tập -->
+<div class="modal fade" id="reportSpaceModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="font-weight: bold; color: #030391;">Báo cáo sự cố</h5>
+                <h5 class="modal-title" id="reportSpaceModalLabel" style="font-weight: bold; color: #030391;">Báo cáo tình trạng phòng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="stateForm">
+                <form id="reportRoomForm">
                     <div class="mb-3">
-                        <label for="issue" class="form-label">ID sự cố</label>
-                        <select id="issueid" class="form-select" placeholder="ID sự cố">
-                            <option value="Phòng 101">1111</option>
-                            <option value="Phòng 102">1112</option>
+                        <label for="issueRoom" class="form-label">Người báo cáo</label>
+                        <input type="text" class="form-control underline-input" name="userID" value="<?= $_SESSION["userID"] ?>" readonly>
+                    </div>
+                    <div class="col-12 my-2 room-select" id="issueRoom">
+                        <label for="room2_id">Chọn phòng</label>
+                        <select class="form-select" name="issueRoom" required>
+                            <option value="---" disabled selected>Hãy chọn phòng</option>
+                            <?php foreach($selfRoomList as $room): ?>
+                                <option value="<?= $room["id"]; ?>">Phòng tự học - <?= $room["address"]; ?></option>
+                            <?php endforeach; ?>
+                            <?php foreach($dualRoomList as $room): ?>
+                                <option value="<?= $room["id"]; ?>">Phòng học đôi - <?= $room["address"]; ?></option>
+                            <?php endforeach; ?>
+                            <?php foreach($groupRoomList as $room): ?>
+                                <option value="<?= $room["id"]; ?>">Phòng học nhóm - <?= $room["address"]; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="NumFB" class="form-label">Số lượng phản hồi: 1 (phản hồi)</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="stateDescription" class="form-label">Mô tả sự cố</label>
-                        <textarea id="issueDescription" class="form-control"></textarea>
+                        <label for="stateDescription" class="form-label">Mô tả tình trạng</label>
+                        <textarea id="issueDescription" class="form-control" name="content"></textarea>
                     </div>
                     <div class="col-12 d-flex flex-wrap justify-content-between mt-2">
                         <div class="col-5 d-grid">
@@ -313,7 +310,6 @@
         </div>
     </div>
 </div>
-
 
 
 <?php include('footer.php'); ?>

@@ -132,7 +132,7 @@
             </table>
         </div>
         <!-- Hiển thị thanh phân trang -->
-        <div id="pagination"></div>
+        <div id="forumPost"></div>
     </div>
 </div>
 
