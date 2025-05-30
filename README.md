@@ -15,7 +15,7 @@
   - ID: `250000`
   - Password: `admin0`
 - **Nhân viên quản lý**:
-  - ID: `251100`
+  - ID: `251000`
   - Password: `staff0`
 - **Sinh viên**:
   - BKNetID: `2510322`
