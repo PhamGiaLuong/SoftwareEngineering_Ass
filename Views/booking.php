@@ -449,7 +449,7 @@
         </table>
     </div>
     <!-- Hiển thị thanh phân trang -->
-    <div id="pagination"></div>
+    <div id="todayBooking"></div>
 </div>
 
     <!-- Hiển thị thông báo động cho người dùng -->
