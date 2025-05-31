@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once "./Models/rooms.php";
+require_once "./Models/users.php";
 
 class Bookings {
     private $Bookings_Today = [
@@ -26,7 +27,7 @@ class Bookings {
     ];
     private $Bookings_History = [    ];
   
-    function generateFakeBookings($count = 10, $currentDate) {
+    function generateFakeBookings($count = 10, $currentDate, $state = null) {
         $fakeBookings = [];
         $statusList = ['completed', 'cancelled', 'expired', 'completed'];
         $userIds = ['2211816', '2211960', '2210615', '2053079', '2510322', '2121221',
@@ -41,21 +42,26 @@ class Bookings {
         $offset = count($this->Bookings_History);
     
         for ($i = 1; $i <= $count; $i++) {
-            $startHour = rand(7, 19);
+            $startHour = rand(7, 16);
             $endHour = $startHour + rand(1, 4);
             $createdAtTime = rand(5, $startHour - 1);
             $createdAtMin = rand(1, 55);
 
-            date_default_timezone_set("Asia/Ho_Chi_Minh"); // Set timezone
-            $currentHourNow = date("G"); // Lấy giờ hiện tại (0-23)
-            // Xác định status
-            if ($currentHourNow < $startHour) {
-                $status = "waiting";  // Chưa tới giờ đặt
-            } elseif ($currentHourNow >= $startHour && $currentHourNow < $endHour) {
-                $status = "using";    // Đang trong thời gian đặt
+            if ($state != null && $state == "today") {
+                date_default_timezone_set("Asia/Ho_Chi_Minh"); // Set timezone
+                $currentHourNow = date("G"); // Lấy giờ hiện tại (0-23)
+                // Xác định status
+                if ($currentHourNow < $startHour) {
+                    $status = "waiting";  // Chưa tới giờ đặt
+                } else if ($currentHourNow >= $startHour && $currentHourNow < $endHour) {
+                    $status = "using";    // Đang trong thời gian đặt
+                } else {
+                    $status = $statusList[array_rand($statusList)]; // Đã qua thời gian đặt
+                }
             } else {
-                $status = $statusList[array_rand($statusList)]; // Đã qua thời gian đặt
+                $status = $statusList[array_rand($statusList)];
             }
+            
     
             $booking = [
                 "booking_id"   => 1000 + $i + $offset,
@@ -181,7 +187,7 @@ class Bookings {
             $this->Bookings_History = $_SESSION["historyBooking"];
         } else {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
-            $this->Bookings_Today = $this->generateFakeBookings(47, date("d/m/Y"));
+            $this->Bookings_Today = $this->generateFakeBookings(47, date("d/m/Y"), "today");
             $_SESSION["todayBooking"] = $this->Bookings_Today;
             $this->generateFakeReports();
         }
@@ -395,7 +401,7 @@ class Bookings {
                 } else if ($diff <= 0 && $diff >= -10) {
                     $rmd["status"] = "overdue";
                     $reminders[] = $rmd;
-                } else if ($diff >= -20 && $booking["status"] != "using") {
+                } else if ($diff <= -10 && $diff >= -20 && $booking["status"] != "using") {
                     $rmd["status"] = "expired";
                     $booking["status"] = "expired";
                     $reminders[] = $rmd;
@@ -495,8 +501,18 @@ class Bookings {
         return $userBookings;
     }
     public function getTodayBookingsByUser($user_id) {
-        $userBookings = 
-            array_filter($this->Bookings_Today, fn($booking) => $booking["user_id"] === $user_id);
+        $userModel = new Users();
+        $auth = $userModel->getUserByID($user_id);
+        $userBookings = [];
+        foreach ($this->Bookings_Today as &$booking) {
+            if ($booking["user_id"] == $user_id) {
+                if ($auth["status"] == "Ngưng hoạt động") {
+                    $booking["status"] = "cancelled";
+                    $_SESSION["todayBooking"] = $this->Bookings_Today;
+                }
+                $userBookings[] = $booking;
+            }
+        }
         return $userBookings;
     }
     public function getBookingsByDate($booking_date) {

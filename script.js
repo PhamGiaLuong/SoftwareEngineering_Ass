@@ -836,7 +836,6 @@ function getAvailableSeat() {
     const roomID = roomSelect.value;
     const startTime = startTimeInput.value;
     const endTime = endTimeInput.value;
-    console.error(currentUserID)
     if (roomID!="---" && startTime && endTime) {
         fetch("/SE_Ass_Code/index.php?url=booking/getAvailableSeat", {
             method: "POST",
@@ -1199,7 +1198,7 @@ function getTodayBookingList(page = 1) {
                     bookingTable.appendChild(detailRow);
                 });
                 // Render phân trang
-                renderPagination("todayBookingList", "none", page, data.totalPages);
+                renderPagination("todayBooking", "none", page, data.totalPages);
             }
         })
         .catch(error => {
@@ -1404,7 +1403,7 @@ function changePage(data, option, page) {
         case "allBookingsList":
             loadBookings(option, page);
             break;
-        case "todayBookingList":
+        case "todayBooking":
             getTodayBookingList(page);
             break;
         default:
